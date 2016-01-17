@@ -30,19 +30,15 @@ Route::group(['middleware' => ['admin_group']], function () {
         return 'adminpanel';
     });
 
-    Route::get('/home', 'HomeController@index');
-
 });
 
 Route::group(['middleware' => ['web']], function () {
+
+    Route::auth();
 
     Route::get('/', function () {
         return view('welcome');
     });
 
-});
-
-Route::group(['middleware' => ['web']], function () {
-    //
-    Route::auth();
+    Route::get('/home', 'HomeController@index');
 });
