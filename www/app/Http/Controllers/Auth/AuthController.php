@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Factory as AuthFactory;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -49,11 +52,20 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
+    public function login(Request $request)
+    {
+       $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+            // Authentication passed...
+            return redirect()->intended('/');
+        }
+    }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -64,7 +76,6 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
