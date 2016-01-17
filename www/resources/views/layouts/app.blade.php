@@ -59,7 +59,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->id }} <span class="caret"></span>
+                                id: {{ Auth::user()->id }} ({{ Auth::user()->company->created_at->format('M d, Y') }}) <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
