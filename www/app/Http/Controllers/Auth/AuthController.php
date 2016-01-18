@@ -56,16 +56,6 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
     }
-    public function login(Request $request)
-    {
-       $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            // Authentication passed...
-            return redirect()->intended('/');
-        }
-    }
-
 
     /**
      * Create a new user instance after a valid registration.
