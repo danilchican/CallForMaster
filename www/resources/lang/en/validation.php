@@ -69,13 +69,13 @@ return [
     'size'                 => [
         'numeric' => 'The :attribute must be :size.',
         'file'    => 'The :attribute must be :size kilobytes.',
-        'string'  => 'Свойство :attribute должно иметь :size символов.',
+        'string'  => 'The :attribute must be :size characters.',
         'array'   => 'The :attribute must contain :size items.',
     ],
-    'string'               => 'Свойство :attribute должно быть в виде строки.',
+    'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'Свойство :attribute уже существует.',
-    'url'                  => 'Свойство :attribute имеет недопустимый формат.',
+    'unique'               => 'The :attribute has already been taken.',
+    'url'                  => 'The :attribute format is invalid.',
 
     /*
     |--------------------------------------------------------------------------
