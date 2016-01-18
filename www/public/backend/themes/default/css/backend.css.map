@@ -1,0 +1,1 @@
+{"version":3,"sources":["backend.scss"],"names":[],"mappings":"AAAA;EACE,oBAAoB,EACrB;;AAED;EACE,kBAAkB,EACnB","file":"backend.css","sourcesContent":["body {\r\n  font-family: 'Lato';\r\n}\r\n\r\n.fa-btn {\r\n  margin-right: 6px;\r\n}"],"sourceRoot":"/source/"}

@@ -11,6 +11,9 @@ var elixir = require('laravel-elixir');
  |
  */
 
+elixir.config.assetsPath = 'public/backend/themes/default';
+elixir.config.publicPath = elixir.config.assetsPath;
+
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass('backend.scss');
 });
