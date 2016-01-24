@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    <title>ZvoniMasteru.by - Каталог специалистов сферы услуг</title>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

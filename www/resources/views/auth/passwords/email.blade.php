@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    <title>ZvoniMasteru.by - Восстановление пароля</title>
+@endsection
+
 <!-- Main Content -->
 @section('content')
 <div class="container">
