@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>ZvoniMasteru.by - Восстановление пароля</title>
+    <title>ZvoniMasteru.by - Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїР°СЂРѕР»СЏ</title>
 @endsection
 
 <!-- Main Content -->
