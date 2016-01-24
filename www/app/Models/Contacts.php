@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Contacts extends Model
 {
     /**
      * The database table used by the model.
@@ -12,7 +12,7 @@ class Company extends Model
      * @var string
      */
 
-    protected $table = 'companies';
+    protected $table = 'contacts';
 
     /**
      * The attributes that are mass assignable.
@@ -21,14 +21,6 @@ class Company extends Model
      */
 
     public $timestamps = false;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-
-    protected $dates = ['created_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -46,13 +38,8 @@ class Company extends Model
      * @return array
      */
 
-    public function user()
+    public function company()
     {
-        return $this->belongsTo('App\Models\User');
-    }
-
-    public function contacts()
-    {
-        return $this->hasOne('App\Models\Contacts');
+        return $this->belongsTo('App\Models\Company');
     }
 }
