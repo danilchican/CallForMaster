@@ -53,6 +53,6 @@ class Company extends Model
 
     public function contacts()
     {
-        return $this->hasOne('App\Models\Contacts');
+        return $this->hasOne('App\Models\Contact');
     }
 }

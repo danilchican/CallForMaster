@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contacts extends Model
+class Contact extends Model
 {
     /**
      * The database table used by the model.
@@ -29,11 +29,11 @@ class Contacts extends Model
      */
 
     protected $fillable = [
-        'name', 'description', 'logo_url'
+        'website_url', 'email', 'skype', 'viber', 'icq', 'address'
     ];
 
     /**
-     * An company is owned by a user.
+     * An contacts is owned by a company.
      *
      * @return array
      */
