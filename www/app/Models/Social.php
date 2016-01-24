@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Social extends Model
 {
     /**
      * The database table used by the model.
@@ -12,7 +12,7 @@ class Contact extends Model
      * @var string
      */
 
-    protected $table = 'contacts';
+    protected $table = 'socials';
 
     /**
      * The attributes that are mass assignable.
@@ -29,22 +29,17 @@ class Contact extends Model
      */
 
     protected $fillable = [
-        'website_url', 'email', 'skype', 'viber', 'icq', 'address'
+        'vk_name', 'ok_name', 'fb_name', 'vk_url', 'ok_url', 'fb_url'
     ];
 
     /**
-     * An contacts is owned by a company.
+     * An socials groups is owned by a contact of company.
      *
      * @return array
      */
 
-    public function company()
+    public function contacts()
     {
-        return $this->belongsTo('App\Models\Company');
-    }
-
-    public function groups()
-    {
-        return $this->hasOne('App\Models\Social');
+        return $this->belongsTo('App\Models\Contact');
     }
 }
