@@ -4,10 +4,18 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                @if(empty($image = Auth::user()->company->logo_url))
+                    <img src="/backend/themes/adminpanel/images/no_avatar.png" class="img-circle" alt="User Image">
+                @else
+                    <img src="{{$image}}" class="img-circle" alt="User Image">
+                @endif
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                @if(is_null($name = Auth::user()->name))
+                    <p>No Name</p>
+                @else
+                    <p>{{ $name }}</p>
+                @endif
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>

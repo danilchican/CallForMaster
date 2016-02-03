@@ -25,9 +25,7 @@
 
 Route::group(['middleware' => ['admin_group']], function () {
 
-    Route::get('/adminpanel', function () {
-        return view('adminpanel.index');
-    });
+    Route::get('/adminpanel', 'Admin\AdminController@index');
 
 });
 

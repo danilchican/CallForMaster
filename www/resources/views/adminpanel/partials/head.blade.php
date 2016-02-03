@@ -33,11 +33,11 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{{ url('/adminpanel') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini"><b>Z</b>M</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><b>Zvoni</b>Masteru</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -239,16 +239,40 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        @if(empty($companyLogo = Auth::user()->company->logo_url))
+                            <img src="/backend/themes/adminpanel/images/no_avatar.png" class="user-image" alt="User Image">
+                        @else
+                            <img src="{{$companyLogo}}" class="user-image" alt="User Image">
+                        @endif
+
+                        @if(is_null($userName = Auth::user()->name))
+                            <span class="hidden-xs">No Name</span>
+                        @else
+                            <span class="hidden-xs">{{ $userName }}</span>
+                        @endif
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            @if(empty($companyLogo = Auth::user()->company->logo_url))
+                                <img src="/backend/themes/adminpanel/images/no_avatar.png" class="img-circle" alt="User Image">
+                            @else
+                                <img src="{{$companyLogo}}" class="img-circle" alt="User Image">
+                            @endif
+
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                @if(is_null($userName = Auth::user()->name))
+                                  No name
+                                @else
+                                    @if(empty($companyName = Auth::user()->company->name))
+                                        {{ $userName }}
+                                    @else
+                                        {{ $userName }} - {{ $companyName }}
+                                    @endif
+                                @endif
+
+
+                                <small>Зарегистрирован  {{ Auth::user()->created_at->diffForHumans() }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -269,7 +293,7 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

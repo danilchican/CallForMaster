@@ -32,9 +32,17 @@
                         <li><a href="{{ url('/login') }}">Войти</a></li>
                         <li><a href="{{ url('/register') }}">Регистрация</a></li>
                     @else
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                id: {{ Auth::user()->id }} ({{ Auth::user()->company->created_at->format('M d, Y') }}) <span class="caret"></span>
+                                @if(is_null($userName = Auth::user()->name))
+                                   No Name
+                                @else
+                                   {{ $userName }}
+                                @endif
+
+                                 ({{ Auth::user()->created_at->diffForHumans() }}) <span class="caret"></span>
+
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
