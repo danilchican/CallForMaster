@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \Laravelrus\LocalizedCarbon\Traits\LocalizedEloquentTrait;
 
 class Company extends Model
 {

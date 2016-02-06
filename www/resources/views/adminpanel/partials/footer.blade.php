@@ -1,8 +1,5 @@
 <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 2.3.0
-    </div>
-    <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2015-2016 <a href="http://trendmaster.by">TrendMaster Studio</a>.</strong> All rights reserved.
 </footer>
 
 <!-- Control Sidebar -->
@@ -187,8 +184,6 @@
 <script src="backend/themes/adminpanel/js/jquery-jvectormap-world-mill-en.js"></script>
 <!-- SlimScroll 1.3.0 -->
 <script src="backend/themes/adminpanel/js/jquery.slimscroll.min.js"></script>
-<!-- ChartJS 1.0.1 -->
-<script src="backend/themes/adminpanel/js/Chart.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="backend/themes/adminpanel/js/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
