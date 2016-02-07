@@ -16,10 +16,10 @@ class CreateCompanyTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('name', 255);
+            $table->string('slug', 80);
             $table->text('description');
             $table->string('logo_url', 255);
             $table->integer('status')->default(0);  // 2 - approved, -1 - refused, 1 - expects moderation, 0 - none
-            $table->timestamp('created_at');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

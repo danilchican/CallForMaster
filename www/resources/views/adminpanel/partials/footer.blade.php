@@ -169,24 +169,25 @@
 
 </div><!-- ./wrapper -->
 
-<!-- jQuery 2.1.4 -->
-<script src="backend/themes/adminpanel/js/jQuery-2.1.4.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="backend/themes/adminpanel/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="backend/themes/adminpanel/js/fastclick.min.js"></script>
-<!-- AdminLTE App -->
-<script src="backend/themes/adminpanel/js/app.min.js"></script>
-<!-- Sparkline -->
-<script src="backend/themes/adminpanel/js/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="backend/themes/adminpanel/js/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="backend/themes/adminpanel/js/jquery-jvectormap-world-mill-en.js"></script>
-<!-- SlimScroll 1.3.0 -->
-<script src="backend/themes/adminpanel/js/jquery.slimscroll.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="backend/themes/adminpanel/js/dashboard2.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="backend/themes/adminpanel/js/demo.js"></script>
+    <!-- jQuery 2.1.4 -->
+    <script src="/backend/themes/adminpanel/js/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="/backend/themes/adminpanel/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/backend/themes/adminpanel/js/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/backend/themes/adminpanel/js/app.min.js"></script>
+    <!-- Sparkline -->
+    <script src="/backend/themes/adminpanel/js/jquery.sparkline.min.js"></script>
+    <!-- jvectormap -->
+    <script src="/backend/themes/adminpanel/js/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/backend/themes/adminpanel/js/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- SlimScroll 1.3.0 -->
+    <script src="/backend/themes/adminpanel/js/jquery.slimscroll.min.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="/backend/themes/adminpanel/js/dashboard2.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/backend/themes/adminpanel/js/demo.js"></script>
+    @yield('javascripts')
 </body>
 </html>

@@ -34,17 +34,18 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active">
+            <li @if(Request::is('adminpanel')) class="active" @endif>
                 <a href="{{ url('/adminpanel') }}"><i class="fa fa-dashboard"></i> <span>Admin-panel</span></a>
             </li>
-            <li>
+            <li @if(Request::is('adminpanel/companies')) class="active" @endif>
                 <a href="/adminpanel/companies"><i class="fa fa-user"></i><span>Companies</span>
                     <!-- If having a new companies today that it will be display as 'new' -->
                     <small class="label pull-right bg-red"
                            data-toggle="tooltip" data-original-title="Today">new</small>
                 </a>
             </li>
-            <li>
+
+            <li @if(Request::is('adminpanel/orders')) class="active" @endif>
                 <a href="/adminpanel/orders">
                     <i class="fa fa-share"></i> <span>Orders</span>
                     <!-- If having a new orders today that it will be display as 'new' -->

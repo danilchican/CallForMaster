@@ -27,6 +27,11 @@ Route::group(['middleware' => ['admin_group']], function () {
 
     Route::get('/adminpanel', 'Admin\AdminController@index');
 
+    Route::get('/adminpanel/companies', [
+        'as' => 'companies_index',
+        'uses' => 'Admin\CompaniesController@index'
+    ]);
+
 });
 
 Route::group(['middleware' => ['web']], function () {

@@ -28,14 +28,6 @@ class Company extends Model
      * @var array
      */
 
-    protected $dates = ['created_at'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-
     protected $fillable = [
         'name', 'description', 'logo_url'
     ];
