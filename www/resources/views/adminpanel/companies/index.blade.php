@@ -32,9 +32,9 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">All Registered Companies</h3>
+                        <h3 class="box-title">All Companies</h3>
                         <div class="box-tools">
-                            <div class="input-group" style="width: 250px;">
+                            <div class="input-group" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
@@ -58,8 +58,8 @@
                             @foreach($companies as $company)
                                 <tr>
                                     <td>{{ $company->id }}.</td>
-                                    <td><a href="/adminpanel/companies/view/{{ $company->id }}" data-toggle="tooltip" data-original-title="View Company">{!! $company->name == '' ? 'No name' : $company->name !!}</a></td>
-                                    <td>{{ $company->user->created_at }}</td> <!-- Registration date -->
+                                    <td><a href="/adminpanel/companies/view/{{ $company->id }}" data-toggle="tooltip" data-original-title="View Company">{!! empty($company->name) ? 'No name' : $company->name !!}</a></td>
+                                    <td>{{ $company->user->created_at->diffForHumans() }}</td> <!-- Registration date -->
                                     <td>
                                         @if($company->status)
                                             <span class="label label-success">Approved</span>
@@ -67,7 +67,7 @@
                                             <span class="label label-danger">Delivered</span>
                                         @endif
                                     </td> <!-- Published status -->
-                                    <td>
+                                    <td style="text-overflow: ellipsis;">
                                         {!! empty($company->description) ? 'Company has no description yet...' : $company->description !!}
                                     </td> <!-- Description -->
                                     <td>
