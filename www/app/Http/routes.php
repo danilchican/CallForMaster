@@ -32,6 +32,11 @@ Route::group(['middleware' => ['admin_group']], function () {
         'uses' => 'Admin\CompaniesController@index'
     ]);
 
+    Route::get('/adminpanel/companies/new', [
+        'as' => 'companies_new',
+        'uses' => 'Admin\CompaniesController@newCompanies'
+    ]);
+
 });
 
 Route::group(['middleware' => ['web']], function () {

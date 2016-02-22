@@ -23,16 +23,16 @@
         <!-- Info boxes -->
         <div class="callout callout-info">
             <h4>About this page!</h4>
+            {!! $about or "<p>This page has been created for manipulation of all registered companies. You can create, delete and edit
+            any company by clicking for buttons.</p>" !!}
 
-            <p>This page has been created for manipulation of all registered companies. You can create, delete and edit
-            any company by clicking for buttons.</p>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
-                <div class="box">
+                <div class="box no-margin">
                     <div class="box-header">
-                        <h3 class="box-title">All Companies</h3>
+                        <h3 class="box-title">{{ $title }}</h3>
                         <div class="box-tools">
                             <div class="input-group" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div><!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding">
+                    <div class="box-body table-responsive no-padding no-margin">
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
@@ -80,11 +80,18 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="col-sm-6">{!! $companies->links() !!}</div>
+
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
         </div><!-- /.row -->
+
+        <div class="row">
+            <div class="col-sm-6">
+                {!! $companies->links() !!}
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 @endsection

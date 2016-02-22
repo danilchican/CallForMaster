@@ -38,10 +38,12 @@
                 <a href="{{ url('/adminpanel') }}"><i class="fa fa-dashboard"></i> <span>Admin-panel</span></a>
             </li>
             <li @if(Request::is('adminpanel/companies')) class="active" @endif>
-                <a href="/adminpanel/companies"><i class="fa fa-user"></i><span>Companies</span>
+                <a href="{{ url('/adminpanel/companies') }}"><i class="fa fa-user"></i><span>Companies</span>
                     <!-- If having a new companies today that it will be display as 'new' -->
+                    <a class="no-padding" style="position:initial;" href="{{ url('/adminpanel/companies/new') }}">
                     <small class="label pull-right bg-red"
                            data-toggle="tooltip" data-original-title="Today">new</small>
+                    </a>
                 </a>
             </li>
 
