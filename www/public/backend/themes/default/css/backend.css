@@ -4,4 +4,8 @@ body {
 .fa-btn {
   margin-right: 6px; }
 
+.main-catalog .main-catalog-box {
+  text-align: center;
+  margin: 15px 0; }
+
 /*# sourceMappingURL=backend.css.map */
