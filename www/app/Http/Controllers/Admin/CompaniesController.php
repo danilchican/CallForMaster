@@ -14,21 +14,17 @@ class CompaniesController extends Controller
 
     public function index()
     {
-
-        $companies = Company::paginate(2);
-
         return view('adminpanel.companies.index')->with([
-            'companies' => $companies,
+            'companies' => Company::paginate(2),
             'title' => 'All Companies',
         ]);
     }
 
     public function newCompanies()
     { // to complete
-        $companies = Company::paginate(2);
 
         return view('adminpanel.companies.index')->with([
-            'companies' => $companies,
+            'companies' => Company::paginate(2),
             'title' => 'New Companies (not completed)',
             'about' => 'This page display new companies for this week.'
         ]);

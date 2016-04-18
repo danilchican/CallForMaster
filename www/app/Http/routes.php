@@ -41,7 +41,16 @@ Route::group(['middleware' => ['admin_group']], function () {
 
 Route::group(['middleware' => ['web']], function () {
 
+    Route::get('/', 'HomeController@index');
+
     Route::auth();
 
-    Route::get('/', 'HomeController@index');
+});
+
+Route::group(['middleware' => ['web', 'auth']], function () {
+
+    Route::get('/account', [
+        'as' => 'account_index',
+        'uses' => 'AccountController@index'
+    ]);
 });

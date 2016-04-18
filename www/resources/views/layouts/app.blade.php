@@ -11,7 +11,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
                 <!-- Brand -->
                 <a class="navbar-brand" href="{{ url('/') }}">ZvoniMasteru.by</a>
             </div>
@@ -31,9 +30,10 @@
                                 @else
                                    {{ $userName }}
                                 @endif
-                                   ({{ Auth::user()->created_at->diffForHumans() }})<span class="caret"></span>
+                                <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/account') }}">Личный кабинет</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выйти</a></li>
                             </ul><!-- /.dropdown-menu -->
                         </li>

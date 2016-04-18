@@ -14,9 +14,6 @@ class AdminController extends Controller
 
     public function index()
     {
-
-        $countCompanies = Company::count();
-
-        return view('adminpanel.index')->with(['countCompanies' => $countCompanies]);
+        return view('adminpanel.index')->with(['countCompanies' => Company::count()]);
     }
 }
