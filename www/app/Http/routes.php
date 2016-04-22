@@ -25,7 +25,10 @@
 
 Route::group(['middleware' => ['admin_group']], function () {
 
-    Route::get('/adminpanel', 'Admin\AdminController@index');
+    Route::get('/adminpanel', [
+        'as' => 'adminpanel_index',
+        'uses' => 'Admin\AdminController@index'
+    ]);
 
     Route::get('/adminpanel/companies', [
         'as' => 'companies_index',
@@ -51,6 +54,18 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::get('/account', [
         'as' => 'account_index',
-        'uses' => 'AccountController@index'
+        'uses' => 'Account\AccountController@index'
+    ]);
+
+    Route::get('/settings', [
+        'as' => 'settings_index',
+        'uses' => 'Account\SettingsController@index'
+    ]);
+
+    Route::get('/reviews', [
+        'as' => 'reviews_index',
+        'uses' => 'Account\ReviewsController@index'
     ]);
 });
+
+

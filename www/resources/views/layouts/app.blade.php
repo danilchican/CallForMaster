@@ -33,7 +33,10 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/account') }}">Личный кабинет</a></li>
+                                @if(Auth::user()->is_admin)
+                                    <li><a href="{{ route('adminpanel_index') }}">Админ-панель</a></li>
+                                @endif
+                                <li><a href="{{ route('account_index') }}">Личный кабинет</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выйти</a></li>
                             </ul><!-- /.dropdown-menu -->
                         </li>
