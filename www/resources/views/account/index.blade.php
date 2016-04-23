@@ -9,6 +9,26 @@
         #myTab {
             margin-bottom: 15px;
         }
+        .btn-file { position: relative; overflow: hidden; margin-right: 4px; }
+        .btn-file input { position: absolute; top: 0; right: 0; margin: 0; opacity: 0; filter: alpha(opacity=0);
+            transform: translate(-300px, 0) scale(4); font-size: 23px; direction: ltr; cursor: pointer; }
+        /* Fix for IE 7: */
+        * + html .btn-file { padding: 2px 15px; margin: 1px 0 0 0; }
+
+        .glyphicon-refresh-animate {
+            -animation: spin .7s infinite linear;
+            -webkit-animation: spin2 .7s infinite linear;
+        }
+
+        @-webkit-keyframes spin2 {
+            from { -webkit-transform: rotate(0deg);}
+            to { -webkit-transform: rotate(360deg);}
+        }
+
+        @keyframes spin {
+            from { transform: scale(1) rotate(0deg);}
+            to { transform: scale(1) rotate(360deg);}
+        }
     </style>
 @endsection
 
@@ -22,10 +42,23 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane fade in active" id="profile">
+                <div id="validation-errors"></div>
                 <div class="col-md-2 col-sm-3 col-xs-4">
-                    <img class="featurette-image img-responsive" data-src="holder.js/300x300/auto" alt="300x300" width="150" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjI1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjMxcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NTAweDUwMDwvdGV4dD48L3N2Zz4=">
-                    <br/>
+                    <div class="control-group" style="margin-bottom: 5px;">
+                        <div class="controls clearfix">
+                            <span class="btn btn-success btn-file">
+                                <meta name="csrf-token" content="{{ csrf_token() }}">
+                                <i class="icon-plus"></i>
+                                <span class="upload-logo-text">Изменить логотип</span>
+                                <input type="file" name="logo" id="upload-image" enctype="multipart/form-data"/>
+                            </span>
+                        </div>
+                    </div>
+                    <img class="featurette-image img-responsive" id="logo" alt="150x150" width="150" src="{{ $logo_url }}">
+                    <br />
                     <p><a href="{{ route('settings_index') }}" class="">Настройки аккаунта</a></p>
+                    <p><a href="" class="">Виды специальностей</a></p>
+                    <p><a href="" class="">Фото работ</a></p>
                     <p><a href="{{ url('/messages') }}" class="">Сообщения</a></p>
                     <p><a href="{{ route('reviews_index') }}" class="">Отзывы <span>(0)</span></a></p>
                 </div>
@@ -45,10 +78,47 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $('#myTab a').click(function (e) {
-            e.preventDefault()
-            $(this).tab('show')
-        })
-    </script>
+<script>
+$(document).ready(function() {
+
+    $(document).on('change', 'input[name="logo"]', function() {
+
+        var input = $("#upload-image");
+        var data = new FormData();
+        data.append('logo', input.prop('files')[0]);
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('upload_logo') }}",
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            data: data,
+            beforeSend: function() {
+                $('.btn-file').button('loading');
+            },
+            success: function(response){
+                if(response.success) {
+                    $('#logo').attr('src', response.logo_url);
+                } else {
+                    if(response.message == undefined) {
+                        alert(response.errors.logo);
+                        $('.btn-file').button('reset');
+                        return;
+                    }
+                    alert(response.message);
+                }
+                $('.btn-file').button('reset');
+            }
+        });
+    });
+
+});
+</script>
 @endsection

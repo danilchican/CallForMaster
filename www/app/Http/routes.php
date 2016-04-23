@@ -66,6 +66,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'as' => 'reviews_index',
         'uses' => 'Account\ReviewsController@index'
     ]);
+
+    Route::post('/account/upload/logo',[
+        'as' => 'upload_logo',
+        'uses' => 'Account\ImageController@postUploadLogo'
+    ]);
 });
 
 
