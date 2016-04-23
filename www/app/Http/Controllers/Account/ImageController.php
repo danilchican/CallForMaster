@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Faker\Provider\Image;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +25,6 @@ class ImageController extends Controller
                 ]);
             }
 
-
             if(Input::hasFile('logo')) {
 
                 $logo = $request->file('logo');
@@ -48,15 +45,15 @@ class ImageController extends Controller
 
                 return response()->json([
                     'success' => false,
-                    'message' => "Íå óäàëîñü çàãðóçèòü èçîáðàæåíèå"
+                    'message' => "ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ"
                 ]);
 
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => "Ôàéë íå âûáðàí"
-                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => "Ð¤Ð°Ð¹Ð» Ð½Ðµ Ð²Ñ‹Ð±Ñ€Ð°Ð½"
+            ]);
         }
     }
 }
