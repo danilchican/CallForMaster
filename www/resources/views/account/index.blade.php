@@ -5,45 +5,30 @@
 @endsection
 
 @section('css')
-    <style>
-        #myTab {
-            margin-bottom: 15px;
-        }
-        .btn-file { position: relative; overflow: hidden; margin-right: 4px; }
-        .btn-file input { position: absolute; top: 0; right: 0; margin: 0; opacity: 0; filter: alpha(opacity=0);
-            transform: translate(-300px, 0) scale(4); font-size: 23px; direction: ltr; cursor: pointer; }
-        /* Fix for IE 7: */
-        * + html .btn-file { padding: 2px 15px; margin: 1px 0 0 0; }
-
-        .glyphicon-refresh-animate {
-            -animation: spin .7s infinite linear;
-            -webkit-animation: spin2 .7s infinite linear;
-        }
-
-        @-webkit-keyframes spin2 {
-            from { -webkit-transform: rotate(0deg);}
-            to { -webkit-transform: rotate(360deg);}
-        }
-
-        @keyframes spin {
-            from { transform: scale(1) rotate(0deg);}
-            to { transform: scale(1) rotate(360deg);}
-        }
-    </style>
+<style>
+    #myTab {
+        margin-bottom: 15px;
+    }
+    .btn-file { position: relative; overflow: hidden; margin-right: 4px; }
+    .btn-file input { position: absolute; top: 0; right: 0; margin: 0; opacity: 0; filter: alpha(opacity=0);
+        transform: translate(-300px, 0) scale(4); font-size: 23px; direction: ltr; cursor: pointer; }
+    /* Fix for IE 7: */
+    * + html .btn-file { padding: 2px 15px; margin: 1px 0 0 0; }
+</style>
 @endsection
 
 @section('content')
     <div class="container">
         <!-- Nav tabs -->
         <ul id="myTab" class="nav nav-tabs">
-            <li class="active"><a href="#profile" data-toggle="tab">Общие сведения</a></li>
+            <li class="active"><a href="#profile" data-toggle="tab">{{ !empty($cname = $user->company->name) ? $cname : 'Без имени' }}</a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane fade in active" id="profile">
                 <div id="validation-errors"></div>
-                <div class="col-md-2 col-sm-3 col-xs-4">
+                <div class="col-md-2 col-sm-3 col-xs-12">
                     <div class="control-group" style="margin-bottom: 5px;">
                         <div class="controls clearfix">
                             <span class="btn btn-success btn-file">
@@ -62,16 +47,15 @@
                     <p><a href="{{ url('/messages') }}" class="">Сообщения</a></p>
                     <p><a href="{{ route('reviews_index') }}" class="">Отзывы <span>(0)</span></a></p>
                 </div>
-                <div class="col-md-10 col-sm-9 col-xs-8">
-                    <p>Владелец: {{ !empty($user->name) ? $user->name : 'Не заполнено' }}</p>
-                    {{ !is_null($user->name) ? "Владелец: ".$user->name : '' }}
-                    <p>Компания: {{ !empty($cname = $user->company->name) ? $cname : 'Не заполнено' }}</p>
-                    <p>Учетная запись №{{ $user->id }}</p>
+                <div class="col-md-10 col-sm-9 col-xs-12">
+                    <p>Виды услуг: </p>
+                    <p>УНП: {{ !is_null($unp = $user->company->unp_number) ? $unp : 'Не заполнено' }}</p>
+                    <p>Адрес: {{ !empty($address = $user->company->contacts->address) ? $address : 'Не заполнено' }}</p>
+                    <p>Сайт: @if(!empty($website = $user->company->contacts->website_url)) <a href="{{ $website }}">{{ $website }}</a>
+                    @else Не заполнено @endif </p>
+                    <p>Телефоны: </p>
                     <p>Эл. почта: <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
-                    <p>Зарегистрирован {{ $user->created_at->diffForHumans() }}</p>
-                    <p>Город: {{ !empty($address = $user->company->contacts->address) ? $address : 'Не заполнено' }}</p>
                 </div>
-
             </div>
         </div>
     </div>
