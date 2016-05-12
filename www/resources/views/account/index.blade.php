@@ -21,7 +21,7 @@
     <div class="container">
         <!-- Nav tabs -->
         <ul id="myTab" class="nav nav-tabs">
-            <li class="active"><a href="#profile" data-toggle="tab">{{ !empty($cname = $user->company->name) ? $cname : 'Без имени' }}</a></li>
+            <li class="active"><a href="#profile" data-toggle="tab">{{ !empty($cname = $company->name) ? $cname : 'Без имени' }}</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -43,18 +43,30 @@
                     <br />
                     <p><a href="{{ route('settings_index') }}" class="">Настройки аккаунта</a></p>
                     <p><a href="" class="">Виды специальностей</a></p>
-                    <p><a href="" class="">Фото работ</a></p>
-                    <p><a href="{{ url('/messages') }}" class="">Сообщения</a></p>
+                    <p><a href="" class="">Фото работ ({{ $countPhotos }})</a></p>
+                    <p><a href="" class="">Сообщения</a></p>
                     <p><a href="{{ route('reviews_index') }}" class="">Отзывы <span>(0)</span></a></p>
                 </div>
                 <div class="col-md-10 col-sm-9 col-xs-12">
                     <p>Виды услуг: </p>
-                    <p>УНП: {{ !is_null($unp = $user->company->unp_number) ? $unp : 'Не заполнено' }}</p>
-                    <p>Адрес: {{ !empty($address = $user->company->contacts->address) ? $address : 'Не заполнено' }}</p>
-                    <p>Сайт: @if(!empty($website = $user->company->contacts->website_url)) <a href="{{ $website }}">{{ $website }}</a>
+                    <p>УНП: {{ !is_null($unp = $company->unp_number) ? $unp : 'Не заполнено' }}</p>
+                    <p>Адрес: {{ !empty($address = $company->contacts->address) ? $address : 'Не заполнено' }}</p>
+                    <p>Сайт: @if(!empty($website = $company->contacts->website_url)) <a href="{{ $website }}">{{ $website }}</a>
                     @else Не заполнено @endif </p>
                     <p>Телефоны: </p>
                     <p>Эл. почта: <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Фотографии</h3>
+                        </div>
+                        <div class="panel-body">
+                            @if( $countPhotos )
+
+                            @else
+                                Фотографий нет
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

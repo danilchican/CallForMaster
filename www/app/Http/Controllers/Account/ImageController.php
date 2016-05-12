@@ -56,4 +56,8 @@ class ImageController extends Controller
             ]);
         }
     }
+
+    public function postUploadPhotos(Request $request) {
+
+    }
 }

@@ -71,6 +71,12 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'as' => 'upload_logo',
         'uses' => 'Account\ImageController@postUploadLogo'
     ]);
+
+    Route::post('/account/update/socials',[
+        'as' => 'update_socials',
+        'uses' => 'Account\SettingsController@postUpdateSocials'
+    ]);
+
 });
 
 

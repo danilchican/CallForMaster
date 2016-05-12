@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Social extends Model
+class Photo extends Model
 {
     /**
      * The database table used by the model.
@@ -12,7 +12,7 @@ class Social extends Model
      * @var string
      */
 
-    protected $table = 'socials';
+    protected $table = 'photos';
 
     /**
      * The attributes that are mass assignable.
@@ -29,17 +29,11 @@ class Social extends Model
      */
 
     protected $fillable = [
-        'vk_name', 'ok_name', 'fb_name', 'vk_url', 'ok_url', 'fb_url'
+        'image_url', 'title', 'description'
     ];
 
-    /**
-     * An socials groups is owned by a contact of company.
-     *
-     * @return array
-     */
-
-    public function contacts()
+    public function company()
     {
-        return $this->belongsTo(Contact::class);
+        return $this->belongsTo(Company::class);
     }
 }
