@@ -54,7 +54,9 @@
                     <p>Сайт: @if(!empty($website = $company->contacts->website_url)) <a href="{{ $website }}">{{ $website }}</a>
                     @else Не заполнено @endif </p>
                     <p>Телефоны: </p>
-                    <p>Эл. почта: <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+                    <p>Ваш e-mail: <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+                    <p>Эл. почта компании: @if(!empty($email = $company->contacts->email)) <a href="mailto:{{ $email }}">{{ $email }}</a>
+                        @else Не заполнено @endif </p>
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Фотографии</h3>

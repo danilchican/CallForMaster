@@ -15,7 +15,7 @@ class CompaniesController extends Controller
     public function index()
     {
         return view('adminpanel.companies.index')->with([
-            'companies' => Company::paginate(2),
+            'companies' => Company::paginate(4),
             'title' => 'All Companies',
         ]);
     }
@@ -24,7 +24,7 @@ class CompaniesController extends Controller
     {
     // to complete
         return view('adminpanel.companies.index')->with([
-            'companies' => Company::paginate(2),
+            'companies' => Company::paginate(4),
             'title' => 'New Companies (not completed)',
             'about' => 'This page display new companies for this week.'
         ]);

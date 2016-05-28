@@ -62,27 +62,27 @@
                             {!! Form::open(array('id' => 'contacts-form', 'url' => 'asd')) !!}
                             <div class="form-group">
                                 <label for="company-address">Адрес</label>
-                                <input type="text" class="form-control" id="company-address" placeholder="Адрес вашей компании" value="{{ $user->company->contacts->address }}">
+                                <input type="text" class="form-control" name="address" placeholder="Адрес вашей компании" value="{{ $user->company->contacts->address }}">
                             </div>
                             <div class="form-group">
                                 <label for="website">Сайт: </label>
-                                <input type="text" class="form-control" id="website" placeholder="Имя вашего сайта" value="{{ $user->company->contacts->website_url }}">
+                                <input type="text" class="form-control" name="website" placeholder="Имя вашего сайта" value="{{ $user->company->contacts->website_url }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-email">Email компании</label>
-                                <input type="text" class="form-control" id="company-email" value="{{ $user->company->contacts->email }}">
+                                <input type="text" class="form-control" name="email" value="{{ $user->company->contacts->email }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-skype">Skype</label>
-                                <input type="text" class="form-control" id="company-skype" value="{{ $user->company->contacts->skype }}">
+                                <input type="text" class="form-control" name="company-skype" value="{{ $user->company->contacts->skype }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-viber">Viber</label>
-                                <input type="text" class="form-control" id="company-viber" value="{{ $user->company->contacts->viber }}">
+                                <input type="text" class="form-control" name="company-viber" value="{{ $user->company->contacts->viber }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-icq">ICQ</label>
-                                <input type="text" class="form-control" id="company-icq" value="{{ $user->company->contacts->icq }}">
+                                <input type="text" class="form-control" name="company-icq" value="{{ $user->company->contacts->icq }}">
                             </div>
                             <button type="submit" class="btn btn-success save-button">Сохранить</button>
                             {!! Form::close() !!}
@@ -198,7 +198,56 @@
         }
 
         function SendRequestContactsSettings(form_id) {
-            console.log(form_id);
+            var address = $(form_id).find('input[name="address"]').val();
+            var website = $(form_id).find('input[name="website"]').val();
+            var email = $(form_id).find('input[name="email"]').val();
+            var skype = $(form_id).find('input[name="company-skype"]').val();
+            var viber = $(form_id).find('input[name="company-viber"]').val();
+            var icq = $(form_id).find('input[name="company-icq"]').val();
+
+            var _token = $(form_id).find('input[name="_token"]').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': _token
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('update_contacts') }}",
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function() {
+                    $('.alert').remove();
+                    $(form_id).find('.save-button').button('loading');
+                },
+                data: {
+                    address: address,
+                    website_url: website,
+                    email: email,
+                    skype: skype,
+                    viber: viber,
+                    icq: icq
+                },
+                error: function(data)
+                {
+                    console.log(data);
+                    var errors = data.responseJSON;
+                    var errorsHtml = " ";
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value[0] + "</p></div>"; //showing only the first error.
+                    });
+                    $('.contacts-settings').before(errorsHtml);
+                },
+                success: function(data) {
+                    console.log(data);
+                    var success = data.responseJSON;
+                    $('.contacts-settings').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
+                }
+            })
+            .always(function() {
+                $('.save-button').button('reset');
+            });
         }
 
         function SendRequestSocialsSettings(form_id) {

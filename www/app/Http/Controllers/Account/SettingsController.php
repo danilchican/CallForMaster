@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Requests;
 use App\Http\Requests\Account\UpdateSocialsRequest;
 use App\Http\Requests\Account\UpdateMainSettingsRequest;
+use App\Http\Requests\Account\UpdateContactsRequest;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
