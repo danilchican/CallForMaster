@@ -80,7 +80,10 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'as' => 'update_main_settings',
         'uses' => 'Account\SettingsController@postUpdateMainSettings'
     ]);
-
+    Route::post('/account/update/contacts',[
+        'as' => 'update_contacts',
+        'uses' => 'Account\SettingsController@postUpdateContacts'
+    ]);
 });
 
 
