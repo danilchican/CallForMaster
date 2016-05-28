@@ -24,16 +24,63 @@
 */
 
 Route::group(['middleware' => ['admin_group']], function () {
-    Route::adminpanel();
+
+    Route::get('/adminpanel', [
+        'as' => 'adminpanel_index',
+        'uses' => 'Admin\AdminController@index'
+    ]);
+
+    Route::get('/adminpanel/companies', [
+        'as' => 'companies_index',
+        'uses' => 'Admin\CompaniesController@index'
+    ]);
+
+    Route::get('/adminpanel/companies/new', [
+        'as' => 'companies_new',
+        'uses' => 'Admin\CompaniesController@newCompanies'
+    ]);
+
 });
 
 Route::group(['middleware' => ['web']], function () {
+
     Route::get('/', 'HomeController@index');
+
     Route::auth();
+
 });
 
 Route::group(['middleware' => ['web', 'auth']], function () {
-    Route::account();
+
+    Route::get('/account', [
+        'as' => 'account_index',
+        'uses' => 'Account\AccountController@index'
+    ]);
+
+    Route::get('/settings', [
+        'as' => 'settings_index',
+        'uses' => 'Account\SettingsController@index'
+    ]);
+
+    Route::get('/reviews', [
+        'as' => 'reviews_index',
+        'uses' => 'Account\ReviewsController@index'
+    ]);
+
+    Route::post('/account/upload/logo',[
+        'as' => 'upload_logo',
+        'uses' => 'Account\ImageController@postUploadLogo'
+    ]);
+
+    Route::post('/account/update/socials',[
+        'as' => 'update_socials',
+        'uses' => 'Account\SettingsController@postUpdateSocials'
+    ]);
+    Route::post('/account/update/main',[
+        'as' => 'update_main_settings',
+        'uses' => 'Account\SettingsController@postUpdateMainSettings'
+    ]);
+
 });
 
 
