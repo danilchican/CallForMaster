@@ -31,11 +31,9 @@ class SettingsController extends Controller
 
     public function postUpdateMainSettings(UpdateMainSettingsRequest $request) {
         $user = Auth::user();
-       // $company = $user->company;
 
         if($request->ajax()) {
             $user->name = $request->input('username');
-            //$user->save();
             if(empty($request->input('unp_number'))) {
                 $user->company->unp_number = null;
             } else {

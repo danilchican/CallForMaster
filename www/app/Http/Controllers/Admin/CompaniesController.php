@@ -21,8 +21,8 @@ class CompaniesController extends Controller
     }
 
     public function newCompanies()
-    { // to complete
-
+    {
+    // to complete
         return view('adminpanel.companies.index')->with([
             'companies' => Company::paginate(2),
             'title' => 'New Companies (not completed)',
