@@ -25,7 +25,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                @if(is_null($userName = Auth::user()->name))
+                                @if(empty($userName = Auth::user()->name))
                                    No Name
                                 @else
                                    {{ $userName }}

@@ -25,36 +25,27 @@
 
             <div class="tab-pane fade in active" id="settings">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <div class="panel panel-default">
-                        <div class="panel-heading main-settings">
+                    <div class="panel panel-default main-settings">
+                        <div class="panel-heading">
                             <h3 class="panel-title">Основные</h3>
                         </div>
                         <div class="panel-body">
                             {!! Form::open(array('id' => 'main-form', 'url' => 'asd')) !!}
                             <div class="form-group">
                                 <label for="username">Контактное лицо</label>
-                                <input type="text" class="form-control" id="username" placeholder="Введите контактное лицо" value="{{ $user->name }}">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Введите контактное лицо" value="{{ $user->name }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-name">Название компании</label>
-                                <input type="text" class="form-control" id="company-name" placeholder="Введите название компании" value="{{ $user->company->name }}">
+                                <input type="text" class="form-control" id="company-name" name="company-name" placeholder="Введите название компании" value="{{ $user->company->name }}">
                             </div>
                             <div class="form-group">
                                 <label for="unp-number">УНП</label>
-                                <input type="number" class="form-control" id="unp-number" placeholder="Введите номер УНП" value="{{ $user->company->unp_number }}">
+                                <input type="number" class="form-control" id="unp-number" name="unp-number" placeholder="Введите номер УНП" value="{{ $user->company->unp_number }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-description">Описание компании</label>
-                                <textarea class="form-control" rows="5" name="company-description"></textarea>
+                                <textarea class="form-control" rows="5" name="company-description">{{ $user->company->description }}</textarea>
                             </div>
                             <button type="submit" class="btn btn-success save-button">Сохранить</button>
                             {!! Form::close() !!}
@@ -158,7 +149,52 @@
         });
 
         function SendRequestMainSettings(form_id) {
-            console.log(form_id);
+            var username = $(form_id).find('input[name="username"]').val();
+            var company_name = $(form_id).find('input[name="company-name"]').val();
+            var unp_number = $(form_id).find('input[name="unp-number"]').val();
+            var description = $(form_id).find('textarea[name="company-description"]').val();
+
+            var _token = $(form_id).find('input[name="_token"]').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': _token
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('update_main_settings') }}",
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function() {
+                    $('.alert').remove();
+                    $(form_id).find('.save-button').button('loading');
+                },
+                data: {
+                    username: username,
+                    company_name: company_name,
+                    unp_number: unp_number,
+                    description: description
+                },
+                error: function(data)
+                {
+                    console.log(data);
+                    var errors = data.responseJSON;
+                    var errorsHtml = " ";
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value[0] + "</p></div>"; //showing only the first error.
+                    });
+                    $('.main-settings').before(errorsHtml);
+                },
+                success: function(data) {
+                    console.log(data);
+                    var success = data.responseJSON;
+                    $('.main-settings').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
+                }
+            })
+            .always(function() {
+                $('.save-button').button('reset');
+            });
         }
 
         function SendRequestContactsSettings(form_id) {
@@ -206,10 +242,7 @@
             .always(function() {
                     $('.save-button').button('reset');
             });
-
         }
-
     });
-
 </script>
 @endsection

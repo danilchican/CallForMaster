@@ -76,6 +76,10 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'as' => 'update_socials',
         'uses' => 'Account\SettingsController@postUpdateSocials'
     ]);
+    Route::post('/account/update/main',[
+        'as' => 'update_main_settings',
+        'uses' => 'Account\SettingsController@postUpdateMainSettings'
+    ]);
 
 });
 

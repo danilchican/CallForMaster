@@ -7,7 +7,7 @@
                 @if(empty($image = Auth::user()->company->logo_url))
                     <img src="/backend/themes/adminpanel/images/no_avatar.png" class="img-circle" alt="User Image">
                 @else
-                    <img src="{{$image}}" class="img-circle" alt="User Image">
+                    <img src="/uploads/images/{{$image}}" class="img-circle" alt="User Image">
                 @endif
             </div>
             <div class="pull-left info">

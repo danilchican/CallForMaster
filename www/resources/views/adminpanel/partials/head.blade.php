@@ -243,7 +243,7 @@
                         @if(empty($companyLogo = Auth::user()->company->logo_url))
                             <img src="/backend/themes/adminpanel/images/no_avatar.png" class="user-image" alt="User Image">
                         @else
-                            <img src="{{$companyLogo}}" class="user-image" alt="User Image">
+                            <img src="/uploads/images/{{$companyLogo}}" class="user-image" alt="User Image">
                         @endif
 
                         @if(is_null($userName = Auth::user()->name))
@@ -258,7 +258,7 @@
                             @if(empty($companyLogo = Auth::user()->company->logo_url))
                                 <img src="/backend/themes/adminpanel/images/no_avatar.png" class="img-circle" alt="User Image">
                             @else
-                                <img src="{{$companyLogo}}" class="img-circle" alt="User Image">
+                                <img src="/uploads/images/{{$companyLogo}}" class="img-circle" alt="User Image">
                             @endif
 
                             <p>
@@ -289,7 +289,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Мой аккаунт</a>
+                                <a href="{{ url('/account') }}" class="btn btn-default btn-flat">Мой аккаунт</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Выйти</a>

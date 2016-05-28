@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Requests;
 use App\Http\Requests\Account\UpdateSocialsRequest;
+use App\Http\Requests\Account\UpdateMainSettingsRequest;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
@@ -23,6 +24,30 @@ class SettingsController extends Controller
             $groups->update($request->only($attributes));
 
             return response()->json(['msg' => 'Настройки социальных сетей успешно обновлены']);
+        }
+
+        return redirect()->back()-with('msg', 'У вас браузере не включен javascript. Включите и обновите страницу.');
+    }
+
+    public function postUpdateMainSettings(UpdateMainSettingsRequest $request) {
+        $user = Auth::user();
+       // $company = $user->company;
+
+        if($request->ajax()) {
+            $user->name = $request->input('username');
+            //$user->save();
+            if(empty($request->input('unp_number'))) {
+                $user->company->unp_number = null;
+            } else {
+                $user->company->unp_number = $request->input('unp_number');
+            }
+
+            $user->company->name = $request->input('company_name');
+            $user->company->description = $request->input('description');
+            $user->company->save();
+            $user->save();
+
+            return response()->json(['msg' => 'Настройки успешно обновлены']);
         }
 
         return redirect()->back()-with('msg', 'У вас браузере не включен javascript. Включите и обновите страницу.');
