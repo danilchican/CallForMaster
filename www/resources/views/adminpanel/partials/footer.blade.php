@@ -184,10 +184,13 @@
     <script src="/backend/themes/adminpanel/js/jquery-jvectormap-world-mill-en.js"></script>
     <!-- SlimScroll 1.3.0 -->
     <script src="/backend/themes/adminpanel/js/jquery.slimscroll.min.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="/backend/themes/adminpanel/js/dashboard2.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/backend/themes/adminpanel/js/demo.js"></script>
-    @yield('javascripts')
+    <!-- Pace loader -->
+    <script src="/backend/themes/adminpanel/js/pace.min.js"></script>
+    <script>
+        $(document).ajaxStart(function() { Pace.restart(); });
+    </script>
+@yield('javascripts')
 </body>
 </html>

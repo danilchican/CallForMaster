@@ -40,6 +40,17 @@ Route::group(['middleware' => ['admin_group']], function () {
         'uses' => 'Admin\CompaniesController@newCompanies'
     ]);
 
+    Route::get('/adminpanel/categories', [
+        'as' => 'category_index',
+        'uses' => 'PrsoCategoryController@index'
+    ]);
+
+    Route::post('/adminpanel/categories/new', [
+        'as' => 'category_new_post',
+        'uses' => 'PrsoCategoryController@postCreateCategory'
+    ]);
+
+
 });
 
 Route::group(['middleware' => ['web']], function () {

@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "5.2.*",
-        "laravelrus/localized-carbon": "dev-master"
+        "laravelrus/localized-carbon": "dev-master",
+        "kalnoy/nestedset": "^4.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

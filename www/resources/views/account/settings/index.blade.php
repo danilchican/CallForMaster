@@ -30,7 +30,7 @@
                             <h3 class="panel-title">Основные</h3>
                         </div>
                         <div class="panel-body">
-                            {!! Form::open(array('id' => 'main-form', 'url' => 'asd')) !!}
+                            {!! Form::open(array('id' => 'main-form')) !!}
                             <div class="form-group">
                                 <label for="username">Контактное лицо</label>
                                 <input type="text" class="form-control" id="username" name="username" placeholder="Введите контактное лицо" value="{{ $user->name }}">
@@ -59,7 +59,7 @@
                             <h3 class="panel-title">Контактные данные</h3>
                         </div>
                         <div class="panel-body">
-                            {!! Form::open(array('id' => 'contacts-form', 'url' => 'asd')) !!}
+                            {!! Form::open(array('id' => 'contacts-form')) !!}
                             <div class="form-group">
                                 <label for="company-address">Адрес</label>
                                 <input type="text" class="form-control" name="address" placeholder="Адрес вашей компании" value="{{ $user->company->contacts->address }}">
@@ -96,7 +96,7 @@
                             <h3 class="panel-title">Социальные сети</h3>
                         </div>
                         <div class="panel-body">
-                            {!! Form::open(array('id' => 'socials-form', 'route' => 'update_socials')) !!}
+                            {!! Form::open(array('id' => 'socials-form')) !!}
                             <div class="form-group">
                                 <label for="company-vk-group">Группа Вконтакте</label>
                                 <input type="text" class="form-control" name="vk_url" id="vk-group" placeholder="http://vk.com/" value="{{ $user->company->contacts->groups->vk_url }}">
