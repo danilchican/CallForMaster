@@ -27,7 +27,7 @@ class CreateCategoryRequest extends Request
             'name' => 'required|min:3|max:30',
             'slug' => 'required|unique:prso_categories|min:3|max:50',
             'desc' => 'max:100',
-            'parent_id' => 'integer|exists:prso_categories'
+            'parent_id' => 'integer|exists:prso_categories,id'
         ];
     }
 }
