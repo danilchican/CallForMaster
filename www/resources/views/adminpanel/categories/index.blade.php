@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/dataTables.bootstrap.css">
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/jquery.dataTables.css">
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/pace.min.css">
+<link rel="stylesheet" href="/backend/themes/adminpanel/css/select2.min.css">
 @endsection
 
 @section('content')
@@ -83,8 +84,14 @@
                             <input type="text" class="form-control" id="category-slug" name="slug">
                         </div>
                         <div class="form-group">
-                            <label for="annotation">ID родителя</label>
-                            <input type="number" class="form-control" id="category-parent" name="parent">
+                            <label for="parent">Дочерняя категория</label>
+                            <select name="parent" class="form-control select2 select2-hidden-accessible parent-select" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <option></option>
+                                @foreach($parents as $parent)
+                                    <option value="{{ $parent->id }}">{{ $parent->name }}</option>
+                                @endforeach
+                            </select>
+
                         </div>
                         <div class="form-group">
                             <label for="desc">Описание категории</label>
@@ -104,6 +111,15 @@
 @endsection
 
 @section('javascripts')
+    <script src="/backend/themes/adminpanel/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".parent-select").select2({
+                placeholder: "Выберите категорию...",
+                allowClear: true
+            });
+        });
+    </script>
      <script>
         $('document').ready(function() {
 
@@ -121,7 +137,7 @@
                 var name = $('input[name="name"]').val();
                 var slug = $('input[name="slug"]').val();
                 var desc = $('textarea[name="desc"]').val();
-                var parent = $('input[name="parent"]').val();
+                var parent = $('select[name="parent"]').val();
 
                 $.ajax({
                     url: "{{ route('category_new_post') }}",

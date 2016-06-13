@@ -12,8 +12,9 @@ class PrsoCategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::get()->toTree();
-        return view('adminpanel.categories.index')->with(['categories' => $categories]);
+        $parents = Category::get();
+        $categories = $parents->toTree();
+        return view('adminpanel.categories.index')->with(compact('categories', 'parents'));
     }
 
     public function postCreateCategory(CreateCategoryRequest $request)
@@ -21,7 +22,7 @@ class PrsoCategoryController extends Controller
         if($request->ajax()) {
             $parent_id = $request->input('parent_id');
             $node = new Category($request->except(['parent_id']));
-            if($parent_id != 0) {
+            if($parent_id > 0) {
                 $parent = Category::find($parent_id);
                 $node->appendToNode($parent)->save();
             } else {
