@@ -6,6 +6,18 @@
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/jquery.dataTables.css">
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/pace.min.css">
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/select2.min.css">
+<style>
+    .spoiler {
+        padding: 5px 12px;
+        margin: 3px 10px;
+        border-radius: 2px;
+        cursor: pointer;
+        border: 1px solid #d2d6de;
+    }
+    .pull-right {
+        float:right;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -31,7 +43,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-12 col-sm-8 col-md-8">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">All Categories</h3>
@@ -46,30 +58,19 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding categories-table">
-                        <table class="table table-hover">
-                            <tbody><tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Description</th>
-                            </tr>
-                            @foreach ($categories as $category)
-                                @include('adminpanel.categories.category', ['category' => $category, 'dep' => '-'])
-                            @endforeach
-                            </tbody>
-                        </table>
-
+                        @foreach ($categories as $category)
+                            @include('adminpanel.categories.category', ['category' => $category, 'dep' => '-'])
+                        @endforeach
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="col-md-4 col-sm-4 col-xs-12">
                 <div class="box box-default create-category">
                     <div class="box-header with-border">
                         <i class="fa fa-edit"></i>
-
                         <h3 class="box-title">Add Category</h3>
                     </div>
                     <!-- /.box-header -->
@@ -111,9 +112,13 @@
 @endsection
 
 @section('javascripts')
+    <script src="/backend/themes/adminpanel/js/jquery.spoiler.min.js"></script>
     <script src="/backend/themes/adminpanel/js/select2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+
+            $(".spoiler").spoiler();
+
             $(".parent-select").select2({
                 placeholder: "Выберите категорию...",
                 allowClear: true
