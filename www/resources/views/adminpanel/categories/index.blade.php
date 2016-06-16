@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/pace.min.css">
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/select2.min.css">
 <style>
-    .spoiler {
+    .category {
         padding: 5px 12px;
         margin: 3px 10px;
         border-radius: 2px;
@@ -17,6 +17,13 @@
     .pull-right {
         float:right;
     }
+    .categories-table {
+        padding-bottom:6px!important;
+    }
+    h4 {
+        padding: 0 8px;
+    }
+
 </style>
 @endsection
 
@@ -58,9 +65,13 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding categories-table">
-                        @foreach ($categories as $category)
-                            @include('adminpanel.categories.category', ['category' => $category, 'dep' => '-'])
-                        @endforeach
+                        @if(count($categories) < 1)
+                            <h4>Категорий пока нет.</h4>
+                        @else
+                            @foreach ($categories as $category)
+                                @include('adminpanel.categories.category', ['category' => $category, 'dep' => '-'])
+                            @endforeach
+                        @endif
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -68,44 +79,12 @@
             </div>
 
             <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="box box-default create-category">
-                    <div class="box-header with-border">
-                        <i class="fa fa-edit"></i>
-                        <h3 class="box-title">Add Category</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        {!! Form::open(array('id' => 'create-category-form')) !!}
-                        <div class="form-group">
-                            <label for="name">Название категории</label>
-                            <input type="text" class="form-control" id="category-name" name="name" placeholder="Введите название категории">
-                        </div>
-                        <div class="form-group">
-                            <label for="slug">Ссылка</label>
-                            <input type="text" class="form-control" id="category-slug" name="slug">
-                        </div>
-                        <div class="form-group">
-                            <label for="parent">Дочерняя категория</label>
-                            <select name="parent" class="form-control select2 select2-hidden-accessible parent-select" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                <option></option>
-                                @foreach($parents as $parent)
-                                    <option value="{{ $parent->id }}">{{ $parent->name }}</option>
-                                @endforeach
-                            </select>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="desc">Описание категории</label>
-                            <textarea class="form-control" rows="5" name="desc"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success save-button">Сохранить</button>
-                        {!! Form::close() !!}
-                    </div>
-                    <!-- /.box-body -->
-                </div>
+                @include('adminpanel.categories.create', ['parent' => $parents])
             </div>
 
         </div>
+
+        @include('adminpanel.categories.edit')
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
@@ -123,9 +102,13 @@
                 placeholder: "Выберите категорию...",
                 allowClear: true
             });
+
+            $('#edit-cat-modal').modal({
+                show : false
+            });
         });
     </script>
-     <script>
+    <script>
         $('document').ready(function() {
 
             var _token = $('input[name="_token"]').val();
@@ -136,7 +119,7 @@
                 }
             });
 
-            $('.save-button').click(function (e) {
+            $('.create-category').on('click', '.save-button', function (e) {
                 e.preventDefault();
 
                 var name = $('input[name="name"]').val();
@@ -145,7 +128,7 @@
                 var parent = $('select[name="parent"]').val();
 
                 $.ajax({
-                    url: "{{ route('category_new_post') }}",
+                    url: "{{ route('category.create') }}",
                     type: 'POST',
                     dataType: 'json',
                     beforeSend: function() {
@@ -160,7 +143,6 @@
                     },
                     error: function(data)
                     {
-                        console.log(data);
                         var errors = data.responseJSON;
                         var errorsHtml = "";
                         $.each( errors, function( key, value ) {
@@ -169,21 +151,174 @@
                         $('.callout').after(errorsHtml);
                     },
                     success: function(data) {
-                        console.log(data);
-                        var success = data.responseJSON;
                         $('.callout').after("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
 
                         var input = $('.create-category input');
                         $.each(input, function( key, value ) {
                             input.val('');
                         });
+
+                        $('.create-category textarea').val('');
+
+                        var haventCategories = $('.categories-table').find('h4');
+
+                        if(haventCategories)
+                            haventCategories.remove();
+
+                        var content = "<div class='pull-right'><i class='fa fa-pencil edit-cat' aria-hidden='true'" +
+                        "data-toggle='tooltip' data-placement='top' title='Edit' data-toggle='modal' data-target='#edit-cat-modal'></i>" +
+                                " <i class='fa fa-times del-cat' aria-hidden='true' data-toggle='tooltip' data-placement='top' title='Delete'></i></div>";
+                        $('.categories-table').append("<div class='spoiler category' data-spoiler-link='" + data.id + "'><b>" + name + "</b>" + content + "</div>");
+
+                    }
+                })
+                    .always(function() {
+                        $('.save-button').button('reset');
+                    });
+
+            });
+
+            $('#edit-cat-modal').on('click', '#update-btn', function (e) {
+                e.preventDefault();
+
+                var modal = "#edit-cat-modal";
+                var form = "#edit-category-form";
+
+                var id = $(form + ' input.cat-id').val();
+                var name = $(form + ' input#cat-name-edit').val();
+                var slug = $(form + ' input#cat-slug-edit').val();
+                var desc = $(form + ' textarea#desc-edit').val();
+                var parent = $(form + ' select[name="parent"]').val();
+
+                $.ajax({
+                    url: "{{ route('category.update') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('.alert').remove();
+                        $('#update-btn').button('loading');
+                    },
+                    data: {
+                        id: id,
+                        name: name,
+                        slug: slug,
+                        desc: desc,
+                        parent_id: parent
+                    },
+                    error: function(data)
+                    {
+                        var errors = data.responseJSON;
+                        var errorsHtml = "";
+                        if(data.success != undefined) {
+                            errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + errors.msg + "</p></div>"; //showing only the first error.
+                        } else {
+                            $.each(errors, function (key, value) {
+                                errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + value[0] + "</p></div>"; //showing only the first error.
+                            });
+                        }
+                        $(modal + ' .box-body').before(errorsHtml);
+                    },
+                    success: function(data) {
+                        $(modal + ' .box-body').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
+
                     }
                 })
                         .always(function() {
-                            $('.save-button').button('reset');
+                            $('#update-btn').button('reset');
                         });
 
             });
+
+            $('.categories-table').on('click', '.del-cat', function (e) {
+                e.preventDefault();
+
+                var id = getCategoryID(this);
+                var parent = $(this).closest('.category');
+                var content = $(this).find('.spoiler-content[data-spoiler-link="'+ id +'"]');
+
+                $.ajax({
+                    url: "{{ route('category.delete') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: id,
+                    },
+                    error: function(data)
+                    {
+                        var errors = data.responseJSON;
+                        var errorsHtml = "";
+                        $.each( errors, function( key, value ) {
+                            errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value[0] + "</p></div>"; //showing only the first error.
+                        });
+                        parent.before(errorsHtml);
+                    },
+                    success: function(data) {
+                        content.remove();
+                        parent.remove();
+
+                        var item = $('.categories-table').find('.category');
+                        console.log(item);
+                        if(item.length == 0) {
+                            $('.categories-table').append('<h4>Категорий пока нет.</h4>');
+                        }
+                    }
+                });
+
+            });
+
+            $('.categories-table').on('click', '.edit-cat', function (e) {
+                e.preventDefault();
+
+                if(setDataToModal(this)) {
+                    var modal = "#edit-cat-modal";
+                    var form = "#edit-category-form";
+                    var input = $(form + ' input');
+
+                    $.each(input, function(key, value) {
+                        input.val('');
+                    });
+
+                    $(modal + ' textarea').val('');
+
+                    $('#edit-cat-modal').modal('show');
+                } else
+                    alert('Oops. Что-то пошло не так...');
+            });
+
+            function getCategoryID(obj) {
+                return ($(obj).closest('.category').attr('data-spoiler-link'));
+            }
+
+            function setDataToModal(obj) {
+                var id = getCategoryID(obj);
+
+                $.ajax({
+                    url: "{{ route('category.edit') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: id,
+                    },
+                    error: function(data)
+                    {
+                        console.log(data);
+                        var errors = data.responseJSON;
+                        alert(errors.msg);
+                        return false;
+                    },
+                    success: function(data) {
+                        var editForm = $('#edit-category-form');
+
+                        editForm.find('#cat-name-edit').val(data.name);
+                        editForm.find('#cat-slug-edit').val(data.slug);
+                        editForm.find('textarea[name="desc"]').val(data.desc);
+                        editForm.find('input[name="id"]').val(id);
+                    }
+                })
+
+                return true;
+            }
+
         });
     </script>
 @endsection

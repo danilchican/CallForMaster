@@ -45,11 +45,30 @@ Route::group(['middleware' => ['admin_group']], function () {
         'uses' => 'PrsoCategoryController@index'
     ]);
 
-    Route::post('/adminpanel/categories/new', [
-        'as' => 'category_new_post',
-        'uses' => 'PrsoCategoryController@postCreateCategory'
+    Route::post('/adminpanel/categories/create', [
+        'as' => 'category.create',
+        'uses' => 'PrsoCategoryController@create'
     ]);
 
+    Route::post('/adminpanel/categories/delete', [
+        'as' => 'category.delete',
+        'uses' => 'PrsoCategoryController@delete'
+    ]);
+
+    Route::post('/adminpanel/categories/edit', [
+        'as' => 'category.edit',
+        'uses' => 'PrsoCategoryController@edit'
+    ]);
+
+    Route::post('/adminpanel/categories/update', [
+        'as' => 'category.update',
+        'uses' => 'PrsoCategoryController@update'
+    ]);
+
+    Route::get('/adminpanel/categories/search/{query}', [
+        'as' => 'category.search',
+        'uses' => 'PrsoCategoryController@search'
+    ]);
 
 });
 
