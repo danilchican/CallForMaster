@@ -8,6 +8,7 @@ use Kalnoy\Nestedset\NodeTrait;
 class PrsoCategory extends Model
 {
     use NodeTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,6 +18,15 @@ class PrsoCategory extends Model
     protected $fillable = [
         'name', 'slug', 'desc',  'parent_id', '_lft', '_rgt',
     ];
+
+    /**
+     *
+     * Search category by keyword.
+     *
+     * @param $query
+     * @param $keyword
+     * @return mixed
+     */
 
     public function scopeSearchByKeyword($query, $keyword)
     {

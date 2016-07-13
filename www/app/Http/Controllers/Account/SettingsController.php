@@ -8,6 +8,8 @@ use App\Http\Requests\Account\UpdateMainSettingsRequest;
 use App\Http\Requests\Account\UpdateContactsRequest;
 use Illuminate\Support\Facades\Auth;
 
+use Debugbar;
+
 use App\Http\Controllers\Controller;
 
 class SettingsController extends Controller
@@ -22,7 +24,7 @@ class SettingsController extends Controller
         $attributes = ['vk_url', 'ok_url', 'fb_url'];
 
         if($request->ajax()) {
-            $groups->update($request->only($attributes));
+            $groups->limit(1)->update($request->only($attributes)); // one row
 
             return response()->json(['msg' => 'Настройки социальных сетей успешно обновлены']);
         }
@@ -34,17 +36,11 @@ class SettingsController extends Controller
         $user = Auth::user();
 
         if($request->ajax()) {
-            $user->name = $request->input('username');
-            if(empty($request->input('unp_number'))) {
-                $user->company->unp_number = null;
-            } else {
-                $user->company->unp_number = $request->input('unp_number');
-            }
+            $req_company = $request->get('company'); // company data
+            $req_company['unp_number'] = (empty($req_company['unp_number'])) ? null : $req_company['unp_number'];
 
-            $user->company->name = $request->input('company_name');
-            $user->company->description = $request->input('description');
-            $user->company->save();
-            $user->save();
+            $user->company->update($req_company);
+            $user->update($request->get('user'));
 
             return response()->json(['msg' => 'Настройки успешно обновлены']);
         }

@@ -32,6 +32,12 @@ class Photo extends Model
         'image_url', 'title', 'description'
     ];
 
+    /**
+     * An photo is owned by a company.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+
     public function company()
     {
         return $this->belongsTo(Company::class);

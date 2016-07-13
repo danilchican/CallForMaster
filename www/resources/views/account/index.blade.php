@@ -41,11 +41,12 @@
                     </div>
                     <img class="featurette-image img-responsive" id="logo" alt="150x150" width="150" src="{{ $logo_url }}">
                     <br />
-                    <p><a href="{{ route('settings_index') }}" class="">Настройки аккаунта</a></p>
-                    <p><a href="" class="">Виды специальностей</a></p>
-                    <p><a href="" class="">Фото работ ({{ $countPhotos }})</a></p>
-                    <p><a href="" class="">Сообщения</a></p>
-                    <p><a href="{{ route('reviews_index') }}" class="">Отзывы <span>(0)</span></a></p>
+                    <p><a href="{{ route('settings_index') }}">Настройки аккаунта</a></p>
+                    <p><a href="">Виды работ</a></p>
+                    <p><a href="">Виды специальностей</a></p>
+                    <p><a href="">Фото работ ({{ $countPhotos }})</a></p>
+                    <p><a href="">Сообщения</a></p>
+                    <p><a href="{{ route('reviews_index') }}">Отзывы <span>(0)</span></a></p>
                 </div>
                 <div class="col-md-10 col-sm-9 col-xs-12">
                     <p>Виды услуг: </p>

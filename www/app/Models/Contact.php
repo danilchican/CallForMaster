@@ -43,6 +43,12 @@ class Contact extends Model
         return $this->belongsTo(Company::class);
     }
 
+    /**
+     * An groups is owned by a company.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+
     public function groups()
     {
         return $this->hasOne(Social::class);

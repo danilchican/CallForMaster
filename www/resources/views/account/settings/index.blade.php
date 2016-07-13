@@ -17,7 +17,7 @@
         <!-- Nav tabs -->
         <ul id="myTab" class="nav nav-tabs">
             <li class="active"><a href="#settings" data-toggle="tab">Общие настройки</a></li>
-            <li><a href="#photos" data-toggle="tab">Фото работ</a></li>
+            <li><a href="#contacts" data-toggle="tab">Контактные данные</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -54,6 +54,33 @@
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-default socials-settings">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Социальные сети</h3>
+                        </div>
+                        <div class="panel-body">
+                            {!! Form::open(array('id' => 'socials-form')) !!}
+                            <div class="form-group">
+                                <label for="company-vk-group">Группа Вконтакте</label>
+                                <input type="text" class="form-control" name="vk_url" id="vk-group" placeholder="http://vk.com/" value="{{ $user->company->contacts->groups->vk_url }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="company-fb-group">Группа Facebook</label>
+                                <input type="text" class="form-control" name="fb_url" id="fb-group" placeholder="http://facebook.com/" value="{{ $user->company->contacts->groups->fb_url }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="company-ok-group">Группа Одноклассники</label>
+                                <input type="text" class="form-control" name="ok-group" id="ok-group" placeholder="http://odnoklassniki.ru/" value="{{ $user->company->contacts->groups->ok_url  }}">
+                            </div>
+                            <button type="submit" class="btn btn-success save-button">Сохранить</button>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade in" id="contacts">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="panel panel-default contacts-settings">
                         <div class="panel-heading">
                             <h3 class="panel-title">Контактные данные</h3>
@@ -89,36 +116,18 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel panel-default socials-settings">
+                    <div class="panel panel-default contacts-phones">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Социальные сети</h3>
+                            <h3 class="panel-title">Телефоны</h3>
                         </div>
                         <div class="panel-body">
-                            {!! Form::open(array('id' => 'socials-form')) !!}
-                            <div class="form-group">
-                                <label for="company-vk-group">Группа Вконтакте</label>
-                                <input type="text" class="form-control" name="vk_url" id="vk-group" placeholder="http://vk.com/" value="{{ $user->company->contacts->groups->vk_url }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="company-fb-group">Группа Facebook</label>
-                                <input type="text" class="form-control" name="fb_url" id="fb-group" placeholder="http://facebook.com/" value="{{ $user->company->contacts->groups->fb_url }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="company-ok-group">Группа Одноклассники</label>
-                                <input type="text" class="form-control" name="ok-group" id="ok-group" placeholder="http://odnoklassniki.ru/" value="{{ $user->company->contacts->groups->ok_url  }}">
-                            </div>
-                            <button type="submit" class="btn btn-success save-button">Сохранить</button>
-                            {!! Form::close() !!}
+                            1 основной. 2 дополнительных.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="tab-pane fade in" id="photos">
-                Фото
-            </div>
         </div>
     </div>
 @endsection
@@ -171,10 +180,14 @@
                     $(form_id).find('.save-button').button('loading');
                 },
                 data: {
-                    username: username,
-                    company_name: company_name,
-                    unp_number: unp_number,
-                    description: description
+                    company : {
+                        name: company_name,
+                        unp_number: unp_number,
+                        description: description
+                    },
+                    user : {
+                        name: username,
+                    },
                 },
                 error: function(data)
                 {

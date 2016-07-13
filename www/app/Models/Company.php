@@ -43,10 +43,22 @@ class Company extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * An contacts is owned by a company.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+
     public function contacts()
     {
         return $this->hasOne(Contact::class);
     }
+
+    /**
+     * An photos is owned by a company.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
 
     public function photos()
     {

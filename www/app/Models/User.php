@@ -18,7 +18,7 @@ class User extends Authenticatable
      */
 
     protected $fillable = [
-        'email', 'password'
+        'name', 'email', 'password',
     ];
 
     /**
@@ -26,12 +26,20 @@ class User extends Authenticatable
      *
      * @var array
      */
+
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * User has one company
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
 
     public function company()
     {
         return $this->hasOne(Company::class);
     }
+
 }
