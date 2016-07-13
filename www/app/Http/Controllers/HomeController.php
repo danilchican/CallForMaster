@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Models\PrsoCategory;
 
 class HomeController extends Controller
 {
@@ -14,6 +15,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $categories = PrsoCategory::withDepth()->having('depth', '=', 0)->get()->toTree();
+        $subHeadsCategories = PrsoCategory::get()->toTree();
+
+        return view('welcome')->with(compact(['categories', 'subHeadsCategories']));
     }
 }

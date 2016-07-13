@@ -8,8 +8,6 @@ use App\Http\Requests\Account\UpdateMainSettingsRequest;
 use App\Http\Requests\Account\UpdateContactsRequest;
 use Illuminate\Support\Facades\Auth;
 
-use Debugbar;
-
 use App\Http\Controllers\Controller;
 
 class SettingsController extends Controller
