@@ -64,29 +64,8 @@ class AlbumsController extends Controller
         return view('account.albums.view', compact(['album', 'company']));
     }
 
-    public function uploadPhotos(Request $request)
+    public function delete(Request $request)
     {
-
-        //get the file from the post request
-
-        $file = $request->file('file');
-
-        //set file name
-
-        $filename = uniqid().$file->getClientOriginalName();
-
-        //move the file to correct location
-
-        $file->move('uploads/albums', $filename);
-
-        //save the image details to the database
-
-        $album = Album::find($request->input('album_id'));
-        $photo = $album->photos()->create([
-            'title' => $filename,
-            'image_url' => '/uploads/albums/'.$filename
-        ]);
-
-        return $photo;
+        return 1;
     }
 }

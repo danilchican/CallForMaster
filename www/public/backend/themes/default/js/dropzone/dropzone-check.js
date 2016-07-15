@@ -21,6 +21,6 @@ var handleDropzoneFileUpload = {
 		var baseUrl = 'http://zm.local';
 		var imageList = $('#album-images');
 		var imageSrc = baseUrl + '/' + response.image_url;
-		$(imageList).append('<li><div class="col-md-3 col-sm-3 col-xs-6 photos-box"><a data-lightbox="roadtrip href="' + imageSrc + '"><img style="width: 140px; height: 140px;" src="'+ imageSrc +'" /></a></div></li>')
+		$(imageList).append('<li class="photo-item"><div class="col-md-3 col-sm-3 col-xs-6 photo-box"><i class="fa fa-times del-photo" photo-id="' + response.id + '"></i><a data-lightbox="roadtrip" href="' + imageSrc + '"><img style="width: 140px; height: 140px;" src="'+ imageSrc +'" /></a></div></li>')
 	}
 }

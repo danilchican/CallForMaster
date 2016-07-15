@@ -90,7 +90,7 @@
                                 @foreach($photos as $photo)
                                     <li>
                                         <a data-lightbox="roadtrip" href="{{ $photo->image_url }}">
-                                            <img alt="{{ $photo->title }}" src="{{ $photo->image_url }}" style="width: 140px; height: 140px;">
+                                            <img alt="{{ $photo->title }}" src="/{{ $photo->image_url }}" style="width: 140px; height: 140px;">
                                         </a>
                                     </li>
                                 @endforeach

@@ -102,12 +102,22 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'uses' => 'Account\AlbumsController@create'
     ]);
 
+    Route::post('/albums/delete', [
+        'as' => 'albums.delete',
+        'uses' => 'Account\AlbumsController@delete'
+    ]);
+
     Route::get('/albums/{id}/view', [
         'as' => 'albums.view',
         'uses' => 'Account\AlbumsController@view'
     ])->where('id', '[0-9]+');
 
-    Route::post('/albums/upload', 'Account\AlbumsController@uploadPhotos');
+    Route::post('/photo/upload', 'Account\AlbumsPhotoController@create');
+
+    Route::post('/photo/delete', [
+        'as' => 'photo.delete',
+        'uses' => 'Account\AlbumsPhotoController@delete'
+    ]);
 
     Route::get('/reviews', [
         'as' => 'reviews_index',

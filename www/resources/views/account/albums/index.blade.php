@@ -10,6 +10,8 @@
             margin-bottom: 15px;
         }
         .panel-heading { overflow: hidden; }
+
+        .del-album { cursor: pointer; }
     </style>
 @endsection
 
@@ -28,9 +30,12 @@
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @foreach($albums as $album)
-                        <div class="col-md-3 col-sm-3 col-xs-6 main-catalog-box">
+                        <div class="col-md-3 col-sm-3 col-xs-6 album-box">
                             <img class="img-circle" data-src="holder.js/140x140" alt="140x140" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+" style="width: 140px; height: 140px;">
-                            <h4><a href="{{ route('albums.view', ['id' => $album->id]) }}">{{ $album->name }}</a></h4>
+                            <h4>
+                                <a href="{{ route('albums.view', ['id' => $album->id]) }}">{{ $album->name }}</a>
+                                <i class="fa fa-times del-album" album-id="{{ $album->id }}"></i>
+                            </h4>
                         </div><!-- /.col-lg-4 -->
                     @endforeach
                 </div>
@@ -105,6 +110,32 @@
 
             });
 
+            $('.album-box').on('click', '.del-album', function (e) {
+                var parent = $(this).closest('.album-box');
+                var id = $(this).attr('album-id');
+
+                $.ajax({
+                    url: "{{ route('albums.delete') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: id,
+                    },
+                    error: function(data)
+                    {
+                        var errors = data.responseJSON;
+                        var errorsHtml = "";
+                        $.each( errors, function( key, value ) {
+                            errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value[0] + "</p></div>"; //showing only the first error.
+                        });
+                        parent.before(errorsHtml);
+                    },
+                    success: function(data) {
+                        alert(data.message);
+                        //parent.remove();
+                    }
+                });
+            });
 
         });
     </script>
