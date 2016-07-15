@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Models\Album;
+use File;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -66,6 +67,15 @@ class AlbumsController extends Controller
 
     public function delete(Request $request)
     {
-        return 1;
+        $album = Album::find($request->input('id'));
+
+        foreach($album->photos as $photo)
+        {
+            File::delete($photo->image_url);
+        }
+
+        $album->delete();
+
+        return response()->json(['message' => 'Альбом удален.']);
     }
 }

@@ -132,7 +132,7 @@
                     },
                     success: function(data) {
                         alert(data.message);
-                        //parent.remove();
+                        parent.remove();
                     }
                 });
             });
