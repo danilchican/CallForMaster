@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Photo extends Model
+class Album extends Model
 {
     /**
      * The database table used by the model.
@@ -12,7 +12,7 @@ class Photo extends Model
      * @var string
      */
 
-    protected $table = 'photos';
+    protected $table = 'albums';
 
     /**
      * The attributes that are mass assignable.
@@ -29,22 +29,28 @@ class Photo extends Model
      */
 
     protected $fillable = [
-        'image_url', 'title', 'description'
+        'name', 'description',
     ];
 
     /**
-     * An photo is owned by a album.
+     * An albums is owned by a company.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return array
      */
 
-    public function albums()
-    {
-        return $this->belongsTo(Album::class);
-    }
-
-    public function user()
+    public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * An photos is owned by a album.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
     }
 }

@@ -5,6 +5,7 @@
 @endsection
 
 @section('css')
+    <link rel="stylesheet" type="text/css" href="/backend/themes/default/css/lightbox/lightbox.css">
 <style>
     #myTab {
         margin-bottom: 15px;
@@ -14,6 +15,27 @@
         transform: translate(-300px, 0) scale(4); font-size: 23px; direction: ltr; cursor: pointer; }
     /* Fix for IE 7: */
     * + html .btn-file { padding: 2px 15px; margin: 1px 0 0 0; }
+    .panel-heading { overflow: hidden; }
+
+    #album-images {
+        margin: 0;
+        padding: 0;
+    }
+
+    #album-images li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        float: left;
+        padding-right: 10px;
+    }
+
+    #album-images img {
+        width: 240px;
+        height: 160px;
+        border: 2px solid black;
+        margin-bottom: 10px;
+    }
 </style>
 @endsection
 
@@ -44,8 +66,7 @@
                     <p><a href="{{ route('settings_index') }}">Настройки аккаунта</a></p>
                     <p><a href="">Виды работ</a></p>
                     <p><a href="">Виды специальностей</a></p>
-                    <p><a href="">Фото работ ({{ $countPhotos }})</a></p>
-                    <p><a href="">Сообщения</a></p>
+                    <p><a href="{{ route('albums.index') }}">Фото работ ({{ $countPhotos }})</a></p>
                     <p><a href="{{ route('reviews_index') }}">Отзывы <span>(0)</span></a></p>
                 </div>
                 <div class="col-md-10 col-sm-9 col-xs-12">
@@ -60,11 +81,20 @@
                         @else Не заполнено @endif </p>
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Фотографии</h3>
+                            <h3 class="panel-title pull-left">Фотографии</h3>
+                            <div class="panel-tools pull-right"><a href="{{ route('albums.index') }}">Загрузить фотографии</a></div>
                         </div>
                         <div class="panel-body">
-                            @if( $countPhotos )
-
+                            @if( $countPhotos > 0 )
+                            <ul id="album-images">
+                                @foreach($photos as $photo)
+                                    <li>
+                                        <a data-lightbox="roadtrip" href="{{ $photo->image_url }}">
+                                            <img alt="{{ $photo->title }}" src="{{ $photo->image_url }}" style="width: 140px; height: 140px;">
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
                             @else
                                 Фотографий нет
                             @endif
@@ -77,6 +107,7 @@
 @endsection
 
 @section('scripts')
+    <script type="text/javascript" src="/backend/themes/default/js/lightbox/lightbox-plus-jquery.min.js"></script>
 <script>
 $(document).ready(function() {
 

@@ -92,6 +92,23 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'uses' => 'Account\SettingsController@index'
     ]);
 
+    Route::get('/albums', [
+        'as' => 'albums.index',
+        'uses' => 'Account\AlbumsController@index'
+    ]);
+
+    Route::post('/albums/create', [
+        'as' => 'albums.create',
+        'uses' => 'Account\AlbumsController@create'
+    ]);
+
+    Route::get('/albums/{id}/view', [
+        'as' => 'albums.view',
+        'uses' => 'Account\AlbumsController@view'
+    ])->where('id', '[0-9]+');
+
+    Route::post('/albums/upload', 'Account\AlbumsController@uploadPhotos');
+
     Route::get('/reviews', [
         'as' => 'reviews_index',
         'uses' => 'Account\ReviewsController@index'

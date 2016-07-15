@@ -154,7 +154,6 @@
                         SendRequestSocialsSettings("#" + form_id);
                     break;
             }
-
         });
 
         function SendRequestMainSettings(form_id) {

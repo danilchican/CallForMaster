@@ -55,13 +55,24 @@ class Company extends Model
     }
 
     /**
-     * An photos is owned by a company.
+     * An albums is owned by a company.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
 
+    public function albums()
+    {
+        return $this->hasMany(Album::class);
+    }
+
+    /**
+     * Getting photos for a company.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+
     public function photos()
     {
-        return $this->hasMany(Photo::class);
+        return $this->hasManyThrough(Photo::class, Album::class);
     }
 }
