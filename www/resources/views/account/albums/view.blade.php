@@ -88,7 +88,7 @@
                 }
             });
 
-            $('.photo-item').on('click', '.del-photo', function (e) {
+            $('#album-images').on('click', '.del-photo', function (e) {
                 var parent = $(this).closest('li');
                 var id = $(this).attr('photo-id');
 
