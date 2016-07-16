@@ -107,10 +107,11 @@
 @endsection
 
 @section('scripts')
+
     <script type="text/javascript" src="/backend/themes/default/js/lightbox/lightbox-plus-jquery.min.js"></script>
 <script>
 $(document).ready(function() {
-
+    jQuery.noConflict();
     $(document).on('change', 'input[name="logo"]', function() {
 
         var input = $("#upload-image");
