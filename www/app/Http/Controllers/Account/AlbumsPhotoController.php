@@ -51,7 +51,9 @@ class AlbumsPhotoController extends Controller
     {
         $photo = Photo::find($request->input('id'));
 
-        File::delete($photo->image_url);
+        if(File::exists($photo->image_url)) {
+            File::delete($photo->image_url);
+        }
 
         $photo->delete();
 

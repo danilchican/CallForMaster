@@ -10,7 +10,6 @@
         "laravelcollective/html": "5.2.*",
         "laravelrus/localized-carbon": "dev-master",
         "kalnoy/nestedset": "^4.1",
-        "barryvdh/laravel-debugbar": "^2.2",
         "propaganistas/laravel-phone": "^2.7"
     },
     "require-dev": {

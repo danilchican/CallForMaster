@@ -71,7 +71,9 @@ class AlbumsController extends Controller
 
         foreach($album->photos as $photo)
         {
-            File::delete($photo->image_url);
+            if(File::exists($photo->image_url)) {
+                File::delete($photo->image_url);
+            }
         }
 
         $album->delete();
