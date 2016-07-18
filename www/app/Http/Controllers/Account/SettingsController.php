@@ -48,10 +48,9 @@ class SettingsController extends Controller
 
     public function postUpdateContacts(UpdateContactsRequest $request) {
         $contacts = Auth::user()->company->contacts;
-        $attributes = ['address', 'website_url', 'email', 'skype', 'viber', 'icq'];
 
         if($request->ajax()) {
-            $contacts->update($request->only($attributes));
+            $contacts->update($request->all())  ;
 
             return response()->json(['msg' => 'Настройки контактных данных успешно обновлены']);
         }

@@ -29,7 +29,7 @@ class Company extends Model
      */
 
     protected $fillable = [
-        'name', 'description', 'logo_url'
+        'name', 'description', 'logo_url', 'unp_number'
     ];
 
     /**
