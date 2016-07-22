@@ -47,7 +47,7 @@
                                 <label for="company-description">Описание компании</label>
                                 <textarea class="form-control" rows="5" name="company-description">{{ $user->company->description }}</textarea>
                             </div>
-                            <button type="submit" class="btn btn-success save-button">Сохранить</button>
+                            <button type="submit" class="btn btn-primary save-button">Сохранить</button>
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                                 <label for="company-ok-group">Группа Одноклассники</label>
                                 <input type="text" class="form-control" name="ok-group" id="ok-group" placeholder="http://odnoklassniki.ru/" value="{{ $user->company->contacts->groups->ok_url  }}">
                             </div>
-                            <button type="submit" class="btn btn-success save-button">Сохранить</button>
+                            <button type="submit" class="btn btn-primary save-button">Сохранить</button>
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                                 <label for="company-icq">ICQ</label>
                                 <input type="text" class="form-control" name="company-icq" value="{{ $user->company->contacts->icq }}">
                             </div>
-                            <button type="submit" class="btn btn-success save-button">Сохранить</button>
+                            <button type="submit" class="btn btn-primary save-button">Сохранить</button>
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -122,7 +122,16 @@
                             <h3 class="panel-title">Телефоны</h3>
                         </div>
                         <div class="panel-body">
-                            1 основной. 2 дополнительных.
+                            <div id="phones">
+                                @foreach($user->company->contacts->phones as $phone)
+                                    @include('account.settings.phones.item', ['phone' => $phone])
+                                @endforeach
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary add-phone-btn">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Добавить
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -139,6 +148,121 @@
             e.preventDefault()
             $(this).tab('show')
         })
+
+        var _token = $(document).find('input[name="_token"]').val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': _token
+            }
+        });
+
+        $('.update-phone-item').click(function (e) {
+            e.preventDefault();
+
+            var closest = $(this).closest('.phone-item');
+            var id = closest.find('input[name="phone-id"]').val();
+            var number = closest.find('input[name="number"]').val();
+
+            $.ajax({
+                url: "{{ route('account.phone.update') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    number: number,
+                },
+                beforeSend: function() {
+                    $('.alert').remove();
+                    closest.find('.update-phone-item').button('loading');
+                },
+                error: function(data)
+                {
+                    console.log(data);
+                    var errors = data.responseJSON;
+                    var errorsHtml = " ";
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value + "</p></div>"; //showing only the first error.
+                    });
+                    $('.contacts-phones').before(errorsHtml);
+                },
+                success: function(data) {
+                    $('.contacts-phones').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
+                }
+            })
+                    .always(function() {
+                        closest.find('.update-phone-item').button('reset');
+                    });
+
+        });
+
+        $('.del-phone-item').click(function (e) {
+            e.preventDefault();
+
+            var closest = $(this).closest('.phone-item');
+            var id = closest.find('input[name="phone-id"]').val();
+
+            $.ajax({
+                url: "{{ route('account.phone.delete') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                },
+                beforeSend: function() {
+                    $('.alert').remove();
+                    closest.find('.del-phone-item').button('loading');
+                },
+                error: function(data)
+                {
+                    console.log(data);
+                    var errors = data.responseJSON;
+                    var errorsHtml = " ";
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value + "</p></div>"; //showing only the first error.
+                    });
+                    $('.contacts-phones').before(errorsHtml);
+                },
+                success: function(data) {
+                    closest.remove();
+                    $('.contacts-phones').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
+                }
+            })
+                    .always(function() {
+                        closest.find('.del-phone-item').button('reset');
+                    });
+
+        });
+
+        $('.add-phone-btn').click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "{{ route('account.phone.create') }}",
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function() {
+                    $('.alert').remove();
+                    $('.add-phone-btn').button('loading');
+                },
+                error: function(data)
+                {
+                    var errors = data.responseJSON;
+                    var errorsHtml = " ";
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value + "</p></div>"; //showing only the first error.
+                    });
+                    $('.contacts-phones').before(errorsHtml);
+                },
+                success: function(data) {
+                    $('#phones').append(data);
+                }
+            })
+            .always(function() {
+                $('.add-phone-btn').button('reset');
+            });
+
+        });
 
         $('.save-button').click(function (e) {
             e.preventDefault();
@@ -162,16 +286,8 @@
             var unp_number = $(form_id).find('input[name="unp-number"]').val();
             var description = $(form_id).find('textarea[name="company-description"]').val();
 
-            var _token = $(form_id).find('input[name="_token"]').val();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': _token
-                }
-            });
-
             $.ajax({
-                url: "{{ route('update_main_settings') }}",
+                url: "{{ route('update.main.settings') }}",
                 type: 'POST',
                 dataType: 'json',
                 beforeSend: function() {
@@ -217,16 +333,8 @@
             var viber = $(form_id).find('input[name="company-viber"]').val();
             var icq = $(form_id).find('input[name="company-icq"]').val();
 
-            var _token = $(form_id).find('input[name="_token"]').val();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': _token
-                }
-            });
-
             $.ajax({
-                url: "{{ route('update_contacts') }}",
+                url: "{{ route('update.contacts') }}",
                 type: 'POST',
                 dataType: 'json',
                 beforeSend: function() {
@@ -267,16 +375,8 @@
             var fb = $(form_id).find('input[name="fb_url"]').val();
             var ok = $(form_id).find('input[name="ok-group"]').val();
 
-            var _token = $(form_id).find('input[name="_token"]').val();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': _token
-                }
-            });
-
             $.ajax({
-                url: "{{ route('update_socials') }}",
+                url: "{{ route('update.socials') }}",
                 type: 'POST',
                 dataType: 'json',
                 beforeSend: function() {

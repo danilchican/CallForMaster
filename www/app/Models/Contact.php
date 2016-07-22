@@ -53,4 +53,16 @@ class Contact extends Model
     {
         return $this->hasOne(Social::class);
     }
+
+
+    /**
+     * An phone is owned by a contacts.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function phones()
+    {
+        return $this->hasMany(Phone::class);
+    }
 }

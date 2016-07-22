@@ -130,16 +130,28 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     ]);
 
     Route::post('/account/update/socials',[
-        'as' => 'update_socials',
+        'as' => 'update.socials',
         'uses' => 'Account\SettingsController@postUpdateSocials'
     ]);
     Route::post('/account/update/main',[
-        'as' => 'update_main_settings',
+        'as' => 'update.main.settings',
         'uses' => 'Account\SettingsController@postUpdateMainSettings'
     ]);
     Route::post('/account/update/contacts',[
-        'as' => 'update_contacts',
+        'as' => 'update.contacts',
         'uses' => 'Account\SettingsController@postUpdateContacts'
+    ]);
+    Route::post('/account/phone/create',[
+        'as' => 'account.phone.create',
+        'uses' => 'Account\SettingsController@phoneCreate'
+    ]);
+    Route::post('/account/phone/delete',[
+        'as' => 'account.phone.delete',
+        'uses' => 'Account\SettingsController@phoneDelete'
+    ]);
+    Route::post('/account/phone/update',[
+        'as' => 'account.phone.update',
+        'uses' => 'Account\SettingsController@phoneUpdate'
     ]);
 });
 
