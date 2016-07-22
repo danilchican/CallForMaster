@@ -24,7 +24,7 @@ class UpdatePhoneRequest extends Request
     public function rules()
     {
         return [
-            'number' => 'phone:AUTO'
+            'number' => 'phone:AUTO|unique:phones'
         ];
     }
 }

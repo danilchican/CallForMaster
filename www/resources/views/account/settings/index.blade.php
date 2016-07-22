@@ -157,7 +157,7 @@
             }
         });
 
-        $('.update-phone-item').click(function (e) {
+        $('#phones').on('click', '.update-phone-item', function (e) {
             e.preventDefault();
 
             var closest = $(this).closest('.phone-item');
@@ -196,7 +196,7 @@
 
         });
 
-        $('.del-phone-item').click(function (e) {
+        $('#phones').on('click', '.del-phone-item', function (e) {
             e.preventDefault();
 
             var closest = $(this).closest('.phone-item');

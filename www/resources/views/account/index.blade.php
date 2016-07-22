@@ -75,7 +75,14 @@
                     <p>Адрес: {{ !empty($address = $company->contacts->address) ? $address : 'Не заполнено' }}</p>
                     <p>Сайт: @if(!empty($website = $company->contacts->website_url)) <a href="{{ $website }}">{{ $website }}</a>
                     @else Не заполнено @endif </p>
-                    <p>Телефоны: </p>
+                    @if(count($phones) > 0)
+                        <p>Телефоны:</p>
+                    <ul>
+                        @foreach($phones as $phone)
+                            <li>{{ $phone->number }}</li>
+                        @endforeach
+                    </ul>
+                    @endif
                     <p>Ваш e-mail: <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
                     <p>Эл. почта компании: @if(!empty($email = $company->contacts->email)) <a href="mailto:{{ $email }}">{{ $email }}</a>
                         @else Не заполнено @endif </p>
