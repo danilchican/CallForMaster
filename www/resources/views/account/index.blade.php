@@ -64,7 +64,7 @@
                     <img class="featurette-image img-responsive" id="logo" alt="150x150" width="150" src="{{ $logo_url }}">
                     <br />
                     <p><a href="{{ route('settings_index') }}">Настройки аккаунта</a></p>
-                    <p><a href="">Виды работ</a></p>
+                    <p><a href="{{ route('work.types.index') }}">Виды работ</a></p>
                     <p><a href="">Виды специальностей</a></p>
                     <p><a href="{{ route('albums.index') }}">Фото работ ({{ $countPhotos }})</a></p>
                     <p><a href="{{ route('reviews_index') }}">Отзывы <span>(0)</span></a></p>

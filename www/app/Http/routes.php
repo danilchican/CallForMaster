@@ -87,39 +87,39 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'uses' => 'Account\AccountController@index'
     ]);
 
-    Route::get('/settings', [
+    Route::get('/account/settings', [
         'as' => 'settings_index',
         'uses' => 'Account\SettingsController@index'
     ]);
 
-    Route::get('/albums', [
+    Route::get('/account/albums', [
         'as' => 'albums.index',
         'uses' => 'Account\AlbumsController@index'
     ]);
 
-    Route::post('/albums/create', [
+    Route::post('/account/albums/create', [
         'as' => 'albums.create',
         'uses' => 'Account\AlbumsController@create'
     ]);
 
-    Route::post('/albums/delete', [
+    Route::post('/account/albums/delete', [
         'as' => 'albums.delete',
         'uses' => 'Account\AlbumsController@delete'
     ]);
 
-    Route::get('/albums/{id}/view', [
+    Route::get('/account/albums/{id}/view', [
         'as' => 'albums.view',
         'uses' => 'Account\AlbumsController@view'
     ])->where('id', '[0-9]+');
 
-    Route::post('/photo/upload', 'Account\AlbumsPhotoController@create');
+    Route::post('/account/photo/upload', 'Account\AlbumsPhotoController@create');
 
-    Route::post('/photo/delete', [
+    Route::post('/account/photo/delete', [
         'as' => 'photo.delete',
         'uses' => 'Account\AlbumsPhotoController@delete'
     ]);
 
-    Route::get('/reviews', [
+    Route::get('/account/reviews', [
         'as' => 'reviews_index',
         'uses' => 'Account\ReviewsController@index'
     ]);
@@ -152,6 +152,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/account/phone/update',[
         'as' => 'account.phone.update',
         'uses' => 'Account\SettingsController@phoneUpdate'
+    ]);
+
+    Route::get('/account/work/types', [
+        'as' => 'work.types.index',
+        'uses' => 'Account\WorkController@indexTypes'
     ]);
 });
 
