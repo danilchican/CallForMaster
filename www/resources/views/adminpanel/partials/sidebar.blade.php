@@ -64,7 +64,10 @@
                 <a href="/adminpanel/news"><i class="fa fa-file-text-o"></i> <span>News</span></a>
             </li>
             <li>
-                <a href="/adminpanel/categories"><i class="fa fa-list-ul"></i> <span>Categories</span></a>
+                <a href="{{ route('admin.categories.index') }}"><i class="fa fa-list-ul"></i> <span>Categories</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin.specialization.index') }}"><i class="fa fa-list-ul"></i> <span>Specializations</span></a>
             </li>
             <li>
                 <a href="/adminpanel/menus"><i class="fa fa-th"></i> <span>Menus</span></a>

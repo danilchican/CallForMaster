@@ -41,8 +41,18 @@ Route::group(['middleware' => ['admin_group']], function () {
     ]);
 
     Route::get('/adminpanel/categories', [
-        'as' => 'category_index',
+        'as' => 'admin.categories.index',
         'uses' => 'PrsoCategoryController@index'
+    ]);
+
+    Route::get('/adminpanel/specializations', [
+        'as' => 'admin.specialization.index',
+        'uses' => 'Admin\SpecializationsController@index'
+    ]);
+
+    Route::post('/adminpanel/specializations/create', [
+        'as' => 'admin.specialization.create',
+        'uses' => 'Admin\SpecializationsController@create'
     ]);
 
     Route::post('/adminpanel/categories/create', [

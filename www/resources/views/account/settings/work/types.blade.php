@@ -44,6 +44,11 @@
             <div class="tab-pane fade in active" id="categories">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="alert alert-info">
+                            <strong>Справка!</strong> На данной странице вы можете отметить галочками те категории, в которых вы хотели бы находиться в каталоге.
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         @if(count($categories) < 1)
                             <h4>Категорий пока нет.</h4>
                         @else

@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="unp-number">УНП</label>
-                                <input type="number" class="form-control" id="unp-number" name="unp-number" placeholder="Введите номер УНП" value="{{ $user->company->unp_number }}">
+                                <input type="text" class="form-control" id="unp-number" name="unp-number" placeholder="Введите номер УНП" value="{{ $user->company->unp_number }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-description">Описание компании</label>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="website">Сайт: </label>
-                                <input type="text" class="form-control" name="website" placeholder="Имя вашего сайта" value="{{ $user->company->contacts->website_url }}">
+                                <input type="text" class="form-control" name="website" placeholder="Название вашего сайта" value="{{ $user->company->contacts->website_url }}">
                             </div>
                             <div class="form-group">
                                 <label for="company-email">Email компании</label>

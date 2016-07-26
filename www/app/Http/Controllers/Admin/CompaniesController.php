@@ -12,6 +12,12 @@ class CompaniesController extends Controller
         $this->middleware('admin_group');
     }
 
+    /**
+     * Index companies page an admin-panel.
+     *
+     * @return $this
+     */
+
     public function index()
     {
         return view('adminpanel.companies.index')->with([
@@ -19,6 +25,10 @@ class CompaniesController extends Controller
             'title' => 'All Companies',
         ]);
     }
+
+    /**
+     * @return $this
+     */
 
     public function newCompanies()
     {

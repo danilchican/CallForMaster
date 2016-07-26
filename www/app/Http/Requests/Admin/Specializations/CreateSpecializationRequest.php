@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Account;
+namespace App\Http\Requests\Admin\Specializations;
 
 use App\Http\Requests\Request;
 
-class UpdateSocialsRequest extends Request
+class CreateSpecializationRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,9 @@ class UpdateSocialsRequest extends Request
     public function rules()
     {
         return [
-            'vk_url' => 'min:10|max:100',
-            'fb_url' => 'min:10|max:100',
-            'ok_url' => 'min:10|max:100',
+            'name' => 'required|min:3|max:30',
+            'slug' => 'required|unique:specializations|min:3|max:50',
+            'desc' => 'max:100',
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function messages()
-    {
-        return [];
     }
 }
