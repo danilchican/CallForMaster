@@ -32,19 +32,19 @@
                         <div class="panel-body">
                             {!! Form::open(array('id' => 'main-form')) !!}
                             <div class="form-group">
-                                <label for="username">Контактное лицо</label>
+                                <label for="username">Контактное лицо *</label>
                                 <input type="text" class="form-control" id="username" name="username" placeholder="Введите контактное лицо" value="{{ $user->name }}">
                             </div>
                             <div class="form-group">
-                                <label for="company-name">Название компании</label>
+                                <label for="company-name">Название компании *</label>
                                 <input type="text" class="form-control" id="company-name" name="company-name" placeholder="Введите название компании" value="{{ $user->company->name }}">
                             </div>
                             <div class="form-group">
-                                <label for="unp-number">УНП</label>
+                                <label for="unp-number">УНП *</label>
                                 <input type="text" class="form-control" id="unp-number" name="unp-number" placeholder="Введите номер УНП" value="{{ $user->company->unp_number }}">
                             </div>
                             <div class="form-group">
-                                <label for="company-description">Описание компании</label>
+                                <label for="company-description">Описание компании *</label>
                                 <textarea class="form-control" rows="5" name="company-description">{{ $user->company->description }}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary save-button">Сохранить</button>

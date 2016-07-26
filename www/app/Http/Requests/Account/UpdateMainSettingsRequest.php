@@ -24,10 +24,10 @@ class UpdateMainSettingsRequest extends Request
     public function rules()
     {
         return [
-            'user.name' => 'min:2|max:30|alpha|required',
-            'company.name' => 'min:2|max:30|alpha_dash|required',
+            'user.name' => 'min:2|max:30|required',
+            'company.name' => 'min:2|max:30|required',
             'company.unp_number' => 'required|size:9|regex:/[0-9]{9}/',
-            'company.description' => 'min:3|max:300|alpha_dash'
+            'company.description' => 'required|min:3|max:300'
         ];
     }
 }
