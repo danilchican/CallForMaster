@@ -25,10 +25,10 @@ class UpdateContactsRequest extends Request
     {
         return [
             'address' => 'min:3|max:80',
-            'website_url' => 'min:3|max:50',
+            'website_url' => 'min:3|max:50|url',
             'email' => 'email',
             'skype' => 'min:3|max:20',
-            'viber' => 'min:7|max:20',
+            'viber' => 'phone:AUTO',
             'icq' => 'min:3|max:20'
         ];
     }

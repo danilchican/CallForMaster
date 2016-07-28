@@ -24,9 +24,9 @@ class UpdateSocialsRequest extends Request
     public function rules()
     {
         return [
-            'vk_url' => 'min:10|max:100',
-            'fb_url' => 'min:10|max:100',
-            'ok_url' => 'min:10|max:100',
+            'vk_url' => 'min:10|max:100|url',
+            'fb_url' => 'min:10|max:100|url',
+            'ok_url' => 'min:10|max:100|url',
         ];
     }
 
