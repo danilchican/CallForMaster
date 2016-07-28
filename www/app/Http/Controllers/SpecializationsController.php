@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\Specializations\CreateSpecializationRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use App\Models\Specialization;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 
@@ -28,6 +29,21 @@ class SpecializationsController extends Controller
     public function index()
     {
         return view('adminpanel.specializations.index')->with([
+            'specializations' => Specialization::all(),
+            'title' => 'All Specializations',
+        ]);
+    }
+
+    /**
+     * Index specializations page an account
+     *
+     * @return $this
+     */
+
+    public function indexAccount()
+    {
+        return view('account.specializations.index')->with([
+            'company' => Auth::user()->company,
             'specializations' => Specialization::all(),
             'title' => 'All Specializations',
         ]);

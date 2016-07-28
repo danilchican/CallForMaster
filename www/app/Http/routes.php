@@ -47,12 +47,12 @@ Route::group(['middleware' => ['admin_group']], function () {
 
     Route::get('/adminpanel/specializations', [
         'as' => 'admin.specialization.index',
-        'uses' => 'Admin\SpecializationsController@index'
+        'uses' => 'SpecializationsController@index'
     ]);
 
     Route::post('/adminpanel/specializations/create', [
         'as' => 'admin.specialization.create',
-        'uses' => 'Admin\SpecializationsController@create'
+        'uses' => 'SpecializationsController@create'
     ]);
 
     Route::post('/adminpanel/categories/create', [
@@ -167,6 +167,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/account/work/types', [
         'as' => 'work.types.index',
         'uses' => 'Account\WorkController@indexTypes'
+    ]);
+
+    Route::get('/account/specializations', [
+        'as' => 'account.specializations.index',
+        'uses' => 'SpecializationsController@indexAccount'
     ]);
 });
 
