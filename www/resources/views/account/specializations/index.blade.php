@@ -42,10 +42,12 @@
                     </ul>
                     @endif
                 </div>
+                @if(count($specializations) > 1)
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <br/>
                     <button type="button" class="btn btn-primary" id="save-specials">Сохранить изменения</button>
                 </div>
+                @endif
                 {!! Form::close() !!}
             </div>
         </div>
