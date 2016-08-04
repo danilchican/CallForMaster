@@ -87,15 +87,13 @@
 
         </div>
 
-        Edit include
+        @include('adminpanel.specializations.edit')
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 @endsection
 
 @section('javascripts')
-    <script src="/backend/themes/adminpanel/js/jquery.spoiler.min.js"></script>
-    <script src="/backend/themes/adminpanel/js/select2.min.js"></script>
     <script>
         $('document').ready(function() {
 
@@ -162,7 +160,6 @@
 
             });
 
-
             $('.specializations-table').on('click', '.del-special', function (e) {
                 e.preventDefault();
 
@@ -201,6 +198,104 @@
             function getSpecializationID(obj) {
                 return ($(obj).closest('.special-item').find('.special-id').val());
             }
+
+            function setDataToModal(obj) {
+                var id = getSpecializationID(obj);
+
+                $.ajax({
+                    url: "{{ route('admin.specialization.edit') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id: id,
+                    },
+                    error: function(data)
+                    {
+                        console.log(data);
+                        var errors = data.responseJSON;
+                        alert(errors.msg);
+                        return false;
+                    },
+                    success: function(data) {
+                        var editForm = $('#edit-special-form');
+
+                        editForm.find('#special-name-edit').val(data.name);
+                        editForm.find('#special-slug-edit').val(data.slug);
+                        editForm.find('textarea[name="desc"]').val(data.desc);
+                        editForm.find('input[name="id"]').val(id);
+                    }
+                })
+
+                return true;
+            }
+
+            $('.specializations-table').on('click', '.edit-special', function (e) {
+                e.preventDefault();
+
+                if(setDataToModal(this)) {
+                    var modal = "#edit-special-modal";
+                    var form = "#edit-special-form";
+                    var input = $(form + ' input');
+
+                    $.each(input, function(key, value) {
+                        input.val('');
+                    });
+
+                    $(modal + ' textarea').val('');
+
+                    $('#edit-special-modal').modal('show');
+                } else
+                    alert('Oops. Что-то пошло не так...');
+            });
+
+            $('#edit-special-modal').on('click', '#update-btn', function (e) {
+                e.preventDefault();
+
+                var modal = "#edit-special-modal";
+                var form = "#edit-special-form";
+
+                var id = $(form + ' input.special-id').val();
+                var name = $(form + ' input#special-name-edit').val();
+                var slug = $(form + ' input#special-slug-edit').val();
+                var desc = $(form + ' textarea#desc-edit').val();
+
+                $.ajax({
+                    url: "{{ route('admin.specialization.update') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('.alert').remove();
+                        $('#update-btn').button('loading');
+                    },
+                    data: {
+                        id: id,
+                        name: name,
+                        slug: slug,
+                        desc: desc
+                    },
+                    error: function(data)
+                    {
+                        var errors = data.responseJSON;
+                        var errorsHtml = "";
+                        if(data.success != undefined) {
+                            errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + errors.msg + "</p></div>"; //showing only the first error.
+                        } else {
+                            $.each(errors, function (key, value) {
+                                errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + value[0] + "</p></div>"; //showing only the first error.
+                            });
+                        }
+                        $(modal + ' .box-body').before(errorsHtml);
+                    },
+                    success: function(data) {
+                        $(modal + ' .box-body').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
+
+                    }
+                })
+                        .always(function() {
+                            $('#update-btn').button('reset');
+                        });
+
+            });
 
         });
     </script>

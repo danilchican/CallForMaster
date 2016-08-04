@@ -85,4 +85,44 @@ class SpecializationsController extends Controller
 
         return redirect()->back()-with('msg', $this->no_js);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+
+    public function edit(Request $request) {
+
+        if($request->ajax()) {
+            $specialization = Specialization::find($request->input('id'));
+
+            if(is_null($specialization))
+                return response()->json(['msg' => 'Такой специальности не существует']);
+
+            return response()->json($specialization);
+        }
+
+        return redirect()->back()-with('msg', $this->no_js);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+
+    public function update(Request $request)
+    {
+        if($request->ajax()) {
+           $specialization = Specialization::find($request->input('id'));
+
+            if(is_null($specialization))
+                return response()->json(['success' => false, 'msg' => 'Такой специальности не существует'], 422);
+
+            $specialization->update($request->all());
+
+            return response()->json(['msg' => 'Специальность обновлена. Обновите страницу.']);
+        }
+
+        return redirect()->back()-with('msg', $this->no_js);
+    }
 }
