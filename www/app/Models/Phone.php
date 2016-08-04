@@ -43,4 +43,15 @@ class Phone extends Model
         return $this->belongsToMany(Contact::class);
     }
 
+    /**
+     * Filled number.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeFilled($query)
+    {
+        return $query->where('number', '!=', '');
+    }
+
 }

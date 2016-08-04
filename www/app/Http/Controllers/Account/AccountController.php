@@ -16,7 +16,7 @@ class AccountController extends Controller
 
         $photos = $company->photos()->limit(5)->orderBy('id', 'desc')->get();
         $countPhotos = $company->photos()->count();
-        $phones = $company->contacts->phones;
+        $phones = $company->contacts->phones()->filled()->get();
 
         $logo_url = (empty($company->logo_url) && File::exists("uploads/images/".$company->logo_url))
             ? "backend/themes/default/images/no_logo.svg"
