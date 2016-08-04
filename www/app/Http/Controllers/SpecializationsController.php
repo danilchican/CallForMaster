@@ -64,4 +64,25 @@ class SpecializationsController extends Controller
 
         return redirect()->back()-with('msg', $this->no_js);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+
+    public function delete(Request $request)
+    {
+        if($request->ajax()) {
+            $specialization = Specialization::find($request->input('id'));
+
+            if(is_null($specialization))
+                return response()->json(['msg' => 'Такой специальности не существует']);
+
+            $specialization->delete();
+
+            return response()->json(['msg' => 'Специальность удалена']);
+        }
+
+        return redirect()->back()-with('msg', $this->no_js);
+    }
 }

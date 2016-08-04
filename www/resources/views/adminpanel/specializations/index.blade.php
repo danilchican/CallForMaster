@@ -7,23 +7,19 @@
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/pace.min.css">
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/select2.min.css">
 <style>
-    .category {
+    .special-item {
         padding: 5px 12px;
         margin: 3px 10px;
         border-radius: 2px;
-        cursor: pointer;
         border: 1px solid #d2d6de;
     }
-    .pull-right {
-        float:right;
-    }
-    .categories-table {
-        padding-bottom:6px!important;
-    }
-    h4 {
-        padding: 0 8px;
-    }
 
+    .pull-right { float:right; }
+    .pull-right i { cursor: pointer; }
+
+    .specializations-table { padding-bottom:6px!important; }
+
+    h4 { padding: 0 8px; }
 </style>
 @endsection
 
@@ -68,11 +64,16 @@
                         @if(count($specializations) < 1)
                             <h4>Специальностей пока нет.</h4>
                         @else
-                            <ul>
-                                @foreach ($specializations as $special)
-                                    <li><a href="">{{ $special->name }}</a></li>
-                                @endforeach
-                            </ul>
+                            @foreach ($specializations as $special)
+                                <div class="special-item">
+                                    <input type="hidden" class="special-id" value="{{ $special->id }}">
+                                    <b>{{ $special->name }}</b>
+                                    <div class="pull-right">
+                                        <i class="fa fa-pencil edit-special" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" data-toggle="modal" data-target="#edit-special-modal"></i>
+                                        <i class="fa fa-times del-special" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete"></i>
+                                    </div>
+                                </div>
+                            @endforeach
                         @endif
                     </div>
                     <!-- /.box-body -->
@@ -161,66 +162,15 @@
 
             });
 
-            $('#edit-cat-modal').on('click', '#update-btn', function (e) {
+
+            $('.specializations-table').on('click', '.del-special', function (e) {
                 e.preventDefault();
 
-                var modal = "#edit-cat-modal";
-                var form = "#edit-category-form";
-
-                var id = $(form + ' input.cat-id').val();
-                var name = $(form + ' input#cat-name-edit').val();
-                var slug = $(form + ' input#cat-slug-edit').val();
-                var desc = $(form + ' textarea#desc-edit').val();
-                var parent = $(form + ' select[name="parent"]').val();
+                var id = getSpecializationID(this);
+                var content = $(this).closest('.special-item');
 
                 $.ajax({
-                    url: "{{ route('category.update') }}",
-                    type: 'POST',
-                    dataType: 'json',
-                    beforeSend: function() {
-                        $('.alert').remove();
-                        $('#update-btn').button('loading');
-                    },
-                    data: {
-                        id: id,
-                        name: name,
-                        slug: slug,
-                        desc: desc,
-                        parent_id: parent
-                    },
-                    error: function(data)
-                    {
-                        var errors = data.responseJSON;
-                        var errorsHtml = "";
-                        if(data.success != undefined) {
-                            errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + errors.msg + "</p></div>"; //showing only the first error.
-                        } else {
-                            $.each(errors, function (key, value) {
-                                errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + value[0] + "</p></div>"; //showing only the first error.
-                            });
-                        }
-                        $(modal + ' .box-body').before(errorsHtml);
-                    },
-                    success: function(data) {
-                        $(modal + ' .box-body').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
-
-                    }
-                })
-                        .always(function() {
-                            $('#update-btn').button('reset');
-                        });
-
-            });
-
-            $('.categories-table').on('click', '.del-cat', function (e) {
-                e.preventDefault();
-
-                var id = getCategoryID(this);
-                var parent = $(this).closest('.category');
-                var content = $(this).find('.spoiler-content[data-spoiler-link="'+ id +'"]');
-
-                $.ajax({
-                    url: "{{ route('category.delete') }}",
+                    url: "{{ route('admin.specialization.delete') }}",
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -233,73 +183,23 @@
                         $.each( errors, function( key, value ) {
                             errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value[0] + "</p></div>"; //showing only the first error.
                         });
-                        parent.before(errorsHtml);
+                        content.before(errorsHtml);
                     },
                     success: function(data) {
                         content.remove();
-                        parent.remove();
 
-                        var item = $('.categories-table').find('.category');
+                        var item = $('.specializations-table').find('.special-item');
                         console.log(item);
                         if(item.length == 0) {
-                            $('.categories-table').append('<h4>Категорий пока нет.</h4>');
+                            $('.specializations-table').append('<h4>Специальностей пока нет.</h4>');
                         }
                     }
                 });
 
             });
 
-            $('.categories-table').on('click', '.edit-cat', function (e) {
-                e.preventDefault();
-
-                if(setDataToModal(this)) {
-                    var modal = "#edit-cat-modal";
-                    var form = "#edit-category-form";
-                    var input = $(form + ' input');
-
-                    $.each(input, function(key, value) {
-                        input.val('');
-                    });
-
-                    $(modal + ' textarea').val('');
-
-                    $('#edit-cat-modal').modal('show');
-                } else
-                    alert('Oops. Что-то пошло не так...');
-            });
-
-            function getCategoryID(obj) {
-                return ($(obj).closest('.category').attr('data-spoiler-link'));
-            }
-
-            function setDataToModal(obj) {
-                var id = getCategoryID(obj);
-
-                $.ajax({
-                    url: "{{ route('category.edit') }}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        id: id,
-                    },
-                    error: function(data)
-                    {
-                        console.log(data);
-                        var errors = data.responseJSON;
-                        alert(errors.msg);
-                        return false;
-                    },
-                    success: function(data) {
-                        var editForm = $('#edit-category-form');
-
-                        editForm.find('#cat-name-edit').val(data.name);
-                        editForm.find('#cat-slug-edit').val(data.slug);
-                        editForm.find('textarea[name="desc"]').val(data.desc);
-                        editForm.find('input[name="id"]').val(id);
-                    }
-                })
-
-                return true;
+            function getSpecializationID(obj) {
+                return ($(obj).closest('.special-item').find('.special-id').val());
             }
 
         });

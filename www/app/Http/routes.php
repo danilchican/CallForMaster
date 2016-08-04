@@ -55,6 +55,11 @@ Route::group(['middleware' => ['admin_group']], function () {
         'uses' => 'SpecializationsController@create'
     ]);
 
+    Route::post('/adminpanel/specializations/delete', [
+        'as' => 'admin.specialization.delete',
+        'uses' => 'SpecializationsController@delete'
+    ]);
+
     Route::post('/adminpanel/categories/create', [
         'as' => 'category.create',
         'uses' => 'PrsoCategoryController@create'

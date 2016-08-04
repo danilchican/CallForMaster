@@ -6,12 +6,8 @@
 
 @section('css')
     <style>
-        #myTab {
-            margin-bottom: 15px;
-        }
+        #myTab { margin-bottom: 15px; }
         .panel-heading { overflow: hidden; }
-
-        .del-album { cursor: pointer; }
     </style>
 @endsection
 

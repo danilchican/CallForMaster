@@ -93,8 +93,8 @@
 @section('javascripts')
     <script src="/backend/themes/adminpanel/js/jquery.spoiler.min.js"></script>
     <script src="/backend/themes/adminpanel/js/select2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
+    <script>
+        $('document').ready(function() {
 
             $(".spoiler").spoiler();
 
@@ -106,10 +106,6 @@
             $('#edit-cat-modal').modal({
                 show : false
             });
-        });
-    </script>
-    <script>
-        $('document').ready(function() {
 
             var _token = $('input[name="_token"]').val();
 
