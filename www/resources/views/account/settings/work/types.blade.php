@@ -48,13 +48,15 @@
                             <strong>Справка!</strong> На данной странице вы можете отметить галочками те категории, в которых вы хотели бы находиться в каталоге.
                         </div>
                     </div>
+                    {!! Form::open(array('id' => 'selection-works-form')) !!}
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         @if(count($categories) < 1)
                             <h4>Категорий пока нет.</h4>
                         @else
                             @foreach ($categories as $category)
                                 <div class="@if($count = $category->getDescendantCount() > 0)spoiler @endif category" data-spoiler-link="{{ $category->id }}">
-                                    <b><input type="checkbox"> {{ $category->name }}</b>
+                                    <b> {{ Form::checkbox('works[]', $category->id, $category->companies->contains($company->id) ? true : false) }}
+                                        {{ $category->name }}</b>
                                     @if($count > 0)
                                         <div class="pull-right">
                                             <i class="fa fa-plus left-ico" aria-hidden="true"></i>
@@ -66,13 +68,15 @@
                                         @foreach ($category->children as $category)
                                             <div class="row">
                                                 <div class="category-item col-md-12">
-                                                    <input type="checkbox" name="cat-id" value="{{ $category->id }}"> {{  $category->name }}
+                                                    {{ Form::checkbox('works[]', $category->id, $category->companies->contains($company->id) ? true : false) }}
+                                                    {{ $category->name }}
                                                     @if($count > 0)
                                                         <div class="row">
                                                             <div class="category-item col-md-12">
                                                                 @foreach ($category->children as $category)
                                                                     <div class="category-item col-md-12">
-                                                                        <input type="checkbox" name="cat-id" value="{{ $category->id }}"> {{  $category->name }}
+                                                                        {{ Form::checkbox('works[]', $category->id, $category->companies->contains($company->id) ? true : false) }}
+                                                                        {{ $category->name }}
                                                                         @if($count > 0)
                                                                             <div class="row">
                                                                                 <div class="category-item col-md-12">
@@ -95,9 +99,9 @@
                             @endforeach
                         @endif
                     </div>
-
+                    {!! Form::close() !!}
                     <div class="col-md-12 col-sm-12 col-xs-12 save-block">
-                        <button type="submit" class="btn btn-success save-button">Сохранить</button>
+                        <button type="submit" class="btn btn-success save-button">Сохранить изменения</button>
                     </div>
                 </div>
             </div>
@@ -110,6 +114,53 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $(".spoiler").spoiler();
+
+            var _token = $('input[name="_token"]').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': _token
+                }
+            });
+
+            $('#categories').on('click', '.save-button', function (e) {
+                e.preventDefault();
+
+                var works = [];
+
+                $('input:checkbox[name="works[]"]:checked').each(function(){
+                    works.push($(this).val());
+                });
+
+                $.ajax({
+                    url: "{{ route('work.types.update') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('.alert').remove();
+                        $('.save-button').button('loading');
+                    },
+                    data: {
+                        works: works
+                    },
+                    error: function(data)
+                    {
+                        var errors = data.responseJSON;
+                        var errorsHtml = "";
+                        $.each( errors, function( key, value ) {
+                            errorsHtml += "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>"+ value[0] + "</p></div>"; //showing only the first error.
+                        });
+                        $('#categories').before(errorsHtml);
+                    },
+                    success: function(data) {
+                        $('#categories').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
+                    }
+                })
+                        .always(function() {
+                            $('.save-button').button('reset');
+                        });
+
+            });
         });
     </script>
 @endsection

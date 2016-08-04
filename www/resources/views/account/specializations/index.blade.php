@@ -97,12 +97,6 @@
                     },
                     success: function(data) {
                         $('#specializations').before("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p>" + data.msg + "</p></div>");
-
-                        var input = $('.create-specialization input');
-                        $.each(input, function( key, value ) {
-                            input.val('');
-                        });
-
                     }
                 })
                         .always(function() {
@@ -110,6 +104,7 @@
                         });
 
             });
+
         });
     </script>
 @endsection

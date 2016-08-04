@@ -15,7 +15,6 @@ class SpecializationsController extends Controller
 
     private $no_js = "У вас браузере не включен javascript. Включите и обновите страницу.";
 
-
     /**
      * Index specializations page an admin-panel
      *

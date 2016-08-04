@@ -1,5 +1,6 @@
 <div class="category-item col-md-6">
-    <input type="checkbox" name="cat-id" value="{{ $category->id }}"> {{  $category->name }}
+    {{ Form::checkbox('works[]', $category->id, $category->companies->contains($company->id) ? true : false) }}
+    {{ $category->name }}
     @if($count > 0)
         <div class="row">
             <div class="category-item col-md-12">

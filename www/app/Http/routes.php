@@ -193,6 +193,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'uses' => 'Account\WorkController@indexTypes'
     ]);
 
+    Route::post('/account/work/update', [
+        'as' => 'work.types.update',
+        'uses' => 'Account\WorkController@update'
+    ]);
+
     Route::get('/account/specializations', [
         'as' => 'account.specializations.index',
         'uses' => 'SpecializationsController@indexAccount'

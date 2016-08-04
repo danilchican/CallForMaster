@@ -86,4 +86,15 @@ class Company extends Model
     {
         return $this->belongsToMany(Specialization::class, 'specialization_to_company', 'company_id', 'specialization_id');
     }
+
+    /**
+     * Getting categories for a company.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+
+    public function categories()
+    {
+        return $this->belongsToMany(PrsoCategory::class, 'company_to_category', 'company_id', 'category_id');
+    }
 }
