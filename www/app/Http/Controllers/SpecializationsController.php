@@ -15,10 +15,6 @@ class SpecializationsController extends Controller
 
     private $no_js = "У вас браузере не включен javascript. Включите и обновите страницу.";
 
-    public function __construct()
-    {
-        $this->middleware('admin_group');
-    }
 
     /**
      * Index specializations page an admin-panel
@@ -64,7 +60,7 @@ class SpecializationsController extends Controller
             return response()->json(['msg' => 'Специальность добавлена', 'view' => $viewSpecialization]);
         }
 
-        return redirect()->back()-with('msg', $this->no_js);
+        return redirect()->back()->with('msg', $this->no_js);
     }
 
     /**
@@ -85,7 +81,7 @@ class SpecializationsController extends Controller
             return response()->json(['msg' => 'Специальность удалена']);
         }
 
-        return redirect()->back()-with('msg', $this->no_js);
+        return redirect()->back()->with('msg', $this->no_js);
     }
 
     /**
@@ -104,7 +100,7 @@ class SpecializationsController extends Controller
             return response()->json($specialization);
         }
 
-        return redirect()->back()-with('msg', $this->no_js);
+        return redirect()->back()->with('msg', $this->no_js);
     }
 
     /**
@@ -125,7 +121,7 @@ class SpecializationsController extends Controller
             return response()->json(['msg' => 'Специальность обновлена. Обновите страницу.']);
         }
 
-        return redirect()->back()-with('msg', $this->no_js);
+        return redirect()->back()->with('msg', $this->no_js);
     }
 
     public function updateSpecialsRelations(Request $request)
@@ -139,6 +135,6 @@ class SpecializationsController extends Controller
             return response()->json(['msg' => 'Изменения сохранены. Обновите страницу.']);
         }
 
-        return redirect()->back()-with('msg', $this->no_js);
+        return redirect()->back()->with('msg', $this->no_js);
     }
 }
