@@ -132,7 +132,9 @@ class SpecializationsController extends Controller
     {
         if($request->ajax()) {
             $company = Auth::user()->company;
-            $company->specializations()->sync($request->input('specials'));
+            $ids = (empty($request->input('specials'))) ? [] : $request->input('specials');
+
+            $company->specializations()->sync($ids);
 
             return response()->json(['msg' => 'Изменения сохранены. Обновите страницу.']);
         }
