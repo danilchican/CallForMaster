@@ -59,7 +59,9 @@ class SpecializationsController extends Controller
         if($request->ajax()) {
             $specialization = Specialization::create($request->all());
 
-            return response()->json(['msg' => 'Категория добавлена', 'special' => $specialization]);
+            $viewSpecialization = view('adminpanel.specializations.view')->with('specialization', $specialization)->render();
+
+            return response()->json(['msg' => 'Специальность добавлена', 'view' => $viewSpecialization]);
         }
 
         return redirect()->back()-with('msg', $this->no_js);

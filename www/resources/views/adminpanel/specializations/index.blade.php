@@ -65,14 +65,7 @@
                             <h4>Специальностей пока нет.</h4>
                         @else
                             @foreach ($specializations as $special)
-                                <div class="special-item">
-                                    <input type="hidden" class="special-id" value="{{ $special->id }}">
-                                    <b>{{ $special->name }}</b>
-                                    <div class="pull-right">
-                                        <i class="fa fa-pencil edit-special" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" data-toggle="modal" data-target="#edit-special-modal"></i>
-                                        <i class="fa fa-times del-special" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete"></i>
-                                    </div>
-                                </div>
+                                @include('adminpanel.specializations.view', ['specialization' => $special])
                             @endforeach
                         @endif
                     </div>
@@ -151,7 +144,7 @@
                         if(haventSpecializations)
                             haventSpecializations.remove();
 
-                        $('.specializations-table ul').append('<li><a href="">' + data.special.name + '</li>');
+                        $('.specializations-table').append(data.view);
                     }
                 })
                         .always(function() {
