@@ -127,4 +127,16 @@ class SpecializationsController extends Controller
 
         return redirect()->back()-with('msg', $this->no_js);
     }
+
+    public function updateSpecialsRelations(Request $request)
+    {
+        if($request->ajax()) {
+            $company = Auth::user()->company;
+            $company->specializations()->sync($request->input('specials'));
+
+            return response()->json(['msg' => 'Изменения сохранены. Обновите страницу.']);
+        }
+
+        return redirect()->back()-with('msg', $this->no_js);
+    }
 }

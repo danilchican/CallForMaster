@@ -33,4 +33,15 @@ class Specialization extends Model
         'name', 'slug', 'desc',
     ];
 
+    /**
+     * Getting companies belongs to specialization.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'specialization_to_company', 'specialization_id', 'company_id');
+    }
+
 }

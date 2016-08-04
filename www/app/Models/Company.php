@@ -75,4 +75,15 @@ class Company extends Model
     {
         return $this->hasManyThrough(Photo::class, Album::class);
     }
+
+    /**
+     * Getting specializations for a company.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+
+    public function specializations()
+    {
+        return $this->belongsToMany(Specialization::class, 'specialization_to_company', 'company_id', 'specialization_id');
+    }
 }
