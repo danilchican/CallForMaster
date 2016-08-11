@@ -70,7 +70,6 @@
                     <p><a href="{{ route('reviews_index') }}">Отзывы <span>(0)</span></a></p>
                 </div>
                 <div class="col-md-10 col-sm-9 col-xs-12">
-                    <p>Виды услуг: </p>
                     <p>УНП: {{ !is_null($unp = $company->unp_number) ? $unp : 'Не заполнено' }}</p>
                     <p>Адрес: {{ !empty($address = $company->contacts->address) ? $address : 'Не заполнено' }}</p>
                     <p>Сайт: @if(!empty($website = $company->contacts->website_url)) <a href="{{ $website }}">{{ $website }}</a>

@@ -103,6 +103,21 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
 
+    Route::get('/companies', [
+        'as' => 'companies.index',
+        'uses' => 'CompaniesController@index'
+    ]);
+
+    Route::get('/companies/{id}', [
+        'as' => 'companies.cart',
+        'uses' => 'CompaniesController@cart'
+    ])->where('id', '[0-9]+');
+
+    Route::get('/categories/{slug}', [
+        'as' => 'categories.index',
+        'uses' => 'CategoriesController@index'
+    ]);
+
 });
 
 Route::group(['middleware' => ['web', 'auth']], function () {

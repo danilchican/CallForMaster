@@ -29,7 +29,7 @@ class Company extends Model
      */
 
     protected $fillable = [
-        'name', 'description', 'logo_url', 'unp_number'
+        'name', 'description', 'logo_url', 'unp_number', 'slug', 'status'
     ];
 
     /**
@@ -96,5 +96,10 @@ class Company extends Model
     public function categories()
     {
         return $this->belongsToMany(PrsoCategory::class, 'company_to_category', 'company_id', 'category_id');
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', '=', 2);
     }
 }
