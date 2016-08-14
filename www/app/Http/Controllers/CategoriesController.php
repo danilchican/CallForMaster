@@ -19,7 +19,7 @@ class CategoriesController extends Controller
             }
 
             return view('categories.index')->with([
-                'companies' => $category->companies()->paginate(5)
+                'companies' => $category->companies()->published()->paginate(5)
             ]);
         } catch (\Exception $e) {
             return response()->view('errors.'.'503');
