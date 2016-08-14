@@ -21,8 +21,9 @@ class CompaniesController extends Controller
     {
         try {
             $company = Company::findOrFail($id);
+            $reviews = $company->reviews()->get();
 
-            return view('companies.cart')->with(compact(['company']));
+            return view('companies.cart')->with(compact(['company', 'reviews']));
         } catch (\Exception $e) {
             return response()->view('errors.'.'503');
         }

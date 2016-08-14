@@ -118,6 +118,11 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'CategoriesController@index'
     ]);
 
+    Route::post('/reviews/create', [
+        'as' => 'reviews.create',
+        'uses' => 'ReviewsController@create'
+    ]);
+
 });
 
 Route::group(['middleware' => ['web', 'auth']], function () {
