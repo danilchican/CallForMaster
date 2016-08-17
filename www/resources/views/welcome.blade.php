@@ -27,5 +27,5 @@
         </div><!-- /.row -->
 
     </div><!-- /.main-catalog -->
-пше
+
 @endsection
