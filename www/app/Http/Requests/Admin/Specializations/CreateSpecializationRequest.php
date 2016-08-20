@@ -24,8 +24,8 @@ class CreateSpecializationRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:30',
-            'slug' => 'required|unique:specializations|min:3|max:50',
+            'name' => 'required|min:3|max:80',
+            'slug' => 'required|unique:specializations|min:3|max:80',
             'desc' => 'max:100',
         ];
     }
