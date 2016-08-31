@@ -46,8 +46,8 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>1080</h3>
-                        <p>Displayed Reviews</p>
+                        <h3>{{ $countReviews }}</h3>
+                        <p>Having Reviews</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-chatboxes"></i>

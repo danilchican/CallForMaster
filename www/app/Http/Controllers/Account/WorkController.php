@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 use App\Models\PrsoCategory as Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -67,7 +67,7 @@
                     <p><a href="{{ route('work.types.index') }}">Виды работ</a></p>
                     <p><a href="{{ route('account.specializations.index') }}">Виды специальностей</a></p>
                     <p><a href="{{ route('albums.index') }}">Фото работ ({{ $countPhotos }})</a></p>
-                    <p><a href="{{ route('reviews_index') }}">Отзывы <span>(0)</span></a></p>
+                    <p><a href="{{ route('reviews_index') }}">Отзывы <span>({{ $countReviews  }})</span></a></p>
                 </div>
                 <div class="col-md-10 col-sm-9 col-xs-12">
                     <p>УНП: {{ !is_null($unp = $company->unp_number) ? $unp : 'Не заполнено' }}</p>

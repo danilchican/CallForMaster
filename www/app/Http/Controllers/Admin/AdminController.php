@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Routing\Controller;
 use App\Models\Company;
+use App\Models\Review;
 
 class AdminController extends Controller
 {
@@ -14,6 +15,10 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('adminpanel.index')->with(['countCompanies' => Company::count()]);
+        $countCompanies = Company::count();
+        $countReviews = Review::count();
+
+
+        return view('adminpanel.index')->with(compact(['countCompanies', 'countReviews']));
     }
 }

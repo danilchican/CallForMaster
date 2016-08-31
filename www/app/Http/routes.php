@@ -23,74 +23,74 @@
 |
 */
 
-Route::group(['middleware' => ['admin_group']], function () {
+Route::group(['middleware' => ['admin_group'], 'prefix' => 'admin'], function () {
 
-    Route::get('/adminpanel', [
+    Route::get('/', [
         'as' => 'adminpanel_index',
         'uses' => 'Admin\AdminController@index'
     ]);
 
-    Route::get('/adminpanel/companies', [
+    Route::get('/companies', [
         'as' => 'companies_index',
         'uses' => 'Admin\CompaniesController@index'
     ]);
 
-    Route::get('/adminpanel/companies/new', [
+    Route::get('/companies/new', [
         'as' => 'companies_new',
         'uses' => 'Admin\CompaniesController@newCompanies'
     ]);
 
-    Route::get('/adminpanel/categories', [
+    Route::get('/categories', [
         'as' => 'admin.categories.index',
         'uses' => 'PrsoCategoryController@index'
     ]);
 
-    Route::get('/adminpanel/specializations', [
+    Route::get('/specializations', [
         'as' => 'admin.specialization.index',
         'uses' => 'SpecializationsController@index'
     ]);
 
-    Route::post('/adminpanel/specializations/create', [
+    Route::post('/specializations/create', [
         'as' => 'admin.specialization.create',
         'uses' => 'SpecializationsController@create'
     ]);
 
-    Route::post('/adminpanel/specializations/delete', [
+    Route::post('/specializations/delete', [
         'as' => 'admin.specialization.delete',
         'uses' => 'SpecializationsController@delete'
     ]);
 
-    Route::post('/adminpanel/specializations/edit', [
+    Route::post('/specializations/edit', [
         'as' => 'admin.specialization.edit',
         'uses' => 'SpecializationsController@edit'
     ]);
 
-    Route::post('/adminpanel/specializations/update', [
+    Route::post('/specializations/update', [
         'as' => 'admin.specialization.update',
         'uses' => 'SpecializationsController@update'
     ]);
 
-    Route::post('/adminpanel/categories/create', [
+    Route::post('/categories/create', [
         'as' => 'category.create',
         'uses' => 'PrsoCategoryController@create'
     ]);
 
-    Route::post('/adminpanel/categories/delete', [
+    Route::post('/categories/delete', [
         'as' => 'category.delete',
         'uses' => 'PrsoCategoryController@delete'
     ]);
 
-    Route::post('/adminpanel/categories/edit', [
+    Route::post('/categories/edit', [
         'as' => 'category.edit',
         'uses' => 'PrsoCategoryController@edit'
     ]);
 
-    Route::post('/adminpanel/categories/update', [
+    Route::post('/categories/update', [
         'as' => 'category.update',
         'uses' => 'PrsoCategoryController@update'
     ]);
 
-    Route::get('/adminpanel/categories/search/{query}', [
+    Route::get('/categories/search/{query}', [
         'as' => 'category.search',
         'uses' => 'PrsoCategoryController@search'
     ]);
@@ -113,115 +113,114 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'CompaniesController@cart'
     ])->where('id', '[0-9]+');
 
-    Route::get('/categories/{slug}', [
-        'as' => 'categories.index',
-        'uses' => 'CategoriesController@index'
-    ]);
-
     Route::post('/reviews/create', [
         'as' => 'reviews.create',
         'uses' => 'ReviewsController@create'
     ]);
-
 });
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'account'], function () {
 
-    Route::get('/account', [
+    Route::get('/', [
         'as' => 'account_index',
         'uses' => 'Account\AccountController@index'
     ]);
 
-    Route::get('/account/settings', [
+    Route::get('/settings', [
         'as' => 'settings_index',
         'uses' => 'Account\SettingsController@index'
     ]);
 
-    Route::get('/account/albums', [
+    Route::get('/albums', [
         'as' => 'albums.index',
         'uses' => 'Account\AlbumsController@index'
     ]);
 
-    Route::post('/account/albums/create', [
+    Route::post('/albums/create', [
         'as' => 'albums.create',
         'uses' => 'Account\AlbumsController@create'
     ]);
 
-    Route::post('/account/albums/delete', [
+    Route::post('/albums/delete', [
         'as' => 'albums.delete',
         'uses' => 'Account\AlbumsController@delete'
     ]);
 
-    Route::get('/account/albums/{id}/view', [
+    Route::get('/albums/{id}/view', [
         'as' => 'albums.view',
         'uses' => 'Account\AlbumsController@view'
     ])->where('id', '[0-9]+');
 
-    Route::post('/account/photo/upload', 'Account\AlbumsPhotoController@create');
+    Route::post('/photo/upload', 'Account\AlbumsPhotoController@create');
 
-    Route::post('/account/photo/delete', [
+    Route::post('/photo/delete', [
         'as' => 'photo.delete',
         'uses' => 'Account\AlbumsPhotoController@delete'
     ]);
 
-    Route::get('/account/reviews', [
+    Route::get('/reviews', [
         'as' => 'reviews_index',
         'uses' => 'Account\ReviewsController@index'
     ]);
 
-    Route::post('/account/upload/logo',[
+    Route::post('/upload/logo',[
         'as' => 'upload_logo',
         'uses' => 'Account\ImageController@postUploadLogo'
     ]);
 
-    Route::post('/account/update/socials',[
+    Route::post('/update/socials',[
         'as' => 'update.socials',
         'uses' => 'Account\SettingsController@postUpdateSocials'
     ]);
 
-    Route::post('/account/update/main',[
+    Route::post('/update/main',[
         'as' => 'update.main.settings',
         'uses' => 'Account\SettingsController@postUpdateMainSettings'
     ]);
 
-    Route::post('/account/update/contacts',[
+    Route::post('/update/contacts',[
         'as' => 'update.contacts',
         'uses' => 'Account\SettingsController@postUpdateContacts'
     ]);
 
-    Route::post('/account/update/specials',[
+    Route::post('/update/specials',[
         'as' => 'update.specials',
         'uses' => 'SpecializationsController@updateSpecialsRelations'
     ]);
 
-    Route::post('/account/phone/create',[
+    Route::post('/phone/create',[
         'as' => 'account.phone.create',
         'uses' => 'Account\SettingsController@phoneCreate'
     ]);
 
-    Route::post('/account/phone/delete',[
+    Route::post('/phone/delete',[
         'as' => 'account.phone.delete',
         'uses' => 'Account\SettingsController@phoneDelete'
     ]);
-    Route::post('/account/phone/update',[
+    Route::post('/phone/update',[
         'as' => 'account.phone.update',
         'uses' => 'Account\SettingsController@phoneUpdate'
     ]);
 
-    Route::get('/account/work/types', [
+    Route::get('/work/types', [
         'as' => 'work.types.index',
         'uses' => 'Account\WorkController@indexTypes'
     ]);
 
-    Route::post('/account/work/update', [
+    Route::post('/work/update', [
         'as' => 'work.types.update',
         'uses' => 'Account\WorkController@update'
     ]);
 
-    Route::get('/account/specializations', [
+    Route::get('/specializations', [
         'as' => 'account.specializations.index',
         'uses' => 'SpecializationsController@indexAccount'
     ]);
 });
 
-
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/{category}/{slug?}', [
+        'as' => 'categories.show',
+        'uses' => 'CategoriesController@show'
+    ]);
+});

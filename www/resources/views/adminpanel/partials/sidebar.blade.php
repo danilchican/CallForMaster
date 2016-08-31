@@ -34,11 +34,11 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li @if(Request::is('adminpanel')) class="active" @endif>
-                <a href="{{ url('/adminpanel') }}"><i class="fa fa-dashboard"></i> <span>Admin-panel</span></a>
+            <li @if(Request::is('admin')) class="active" @endif>
+                <a href="{{ route('adminpanel_index') }}"><i class="fa fa-dashboard"></i> <span>Admin-panel</span></a>
             </li>
-            <li @if(Request::is('adminpanel/companies')) class="active" @endif>
-                <a href="{{ url('/adminpanel/companies') }}"><i class="fa fa-user"></i><span>Companies</span>
+            <li @if(Request::is('admin/companies')) class="active" @endif>
+                <a href="{{ route('companies_index') }}"><i class="fa fa-user"></i><span>Companies</span>
                     <!-- If having a new companies today that it will be display as 'new' -->
                     <small class="label pull-right bg-red" data-toggle="tooltip" data-original-title="Today">new</small>
                 </a>

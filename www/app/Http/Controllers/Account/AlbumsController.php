@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class AlbumsController extends Controller
 {

@@ -9,20 +9,39 @@ use App\Http\Requests;
 
 class CategoriesController extends Controller
 {
-    public function index($slug)
+    public function show($category, $slug = null)
     {
-        try {
-            $category = PrsoCategory::where('slug', '=', $slug)->first();
+        if($slug != null) {
+            try {
+                $cat = PrsoCategory::where('slug', '=', $slug)->first();
 
-            if(!$category) {
-                throw new \Exception();
+                if(!$cat) {
+                    throw new \Exception();
+                }
+
+                return view('categories.category')->with([
+                    'companies' => $cat->companies()->published()->paginate(5)
+                ]);
+            } catch (\Exception $e) {
+                return response()->view('errors.'.'503');
             }
+        } else {
+            try {
+                $cat = PrsoCategory::withDepth()->having('depth', '=', 0)->where('slug', '=', $category)->first();
 
-            return view('categories.index')->with([
-                'companies' => $category->companies()->published()->paginate(5)
-            ]);
-        } catch (\Exception $e) {
-            return response()->view('errors.'.'503');
+                if(!$cat) {
+                    throw new \Exception();
+                }
+
+
+
+                return view('categories.index')->with([
+                    'categories' => $cat->children,
+                    'parent' => $cat->slug
+                ]);
+            } catch (\Exception $e) {
+                return response()->view('errors.'.'503');
+            }
         }
     }
 }

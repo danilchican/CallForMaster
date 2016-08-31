@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\Specializations\CreateSpecializationRequest;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use App\Models\Specialization;
 use Illuminate\Support\Facades\Auth;

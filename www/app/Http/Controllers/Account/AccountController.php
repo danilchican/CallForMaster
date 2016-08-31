@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 
 class AccountController extends Controller
@@ -17,11 +17,15 @@ class AccountController extends Controller
         $photos = $company->photos()->limit(5)->orderBy('id', 'desc')->get();
         $countPhotos = $company->photos()->count();
         $phones = $company->contacts->phones()->filled()->get();
+        $countReviews = $company->reviews()->count();
 
         $logo_url = (empty($company->logo_url) && File::exists("uploads/images/".$company->logo_url))
             ? "backend/themes/default/images/no_logo.svg"
             : "uploads/images/".$company->logo_url;
 
-        return view('account.index', compact(['user', 'company', 'logo_url', 'photos', 'countPhotos', 'phones']));
+        return view('account.index', compact([
+            'user', 'company', 'logo_url', 'photos',
+            'countPhotos', 'countReviews', 'phones'
+        ]));
     }
 }

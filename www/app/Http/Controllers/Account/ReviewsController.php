@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class ReviewsController extends Controller
 {
     public function index()
     {
-        return view('account.reviews.index')->with(['user' => Auth::user()]);
+        $user = Auth::user();
+        $reviews = $user->company->reviews()->get();
+
+        return view('account.reviews.index')->with(compact(['user', 'reviews']));
     }
 }
