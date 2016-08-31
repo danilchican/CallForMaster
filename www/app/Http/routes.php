@@ -219,7 +219,7 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'account'], function 
 });
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/{category}/{slug?}', [
+    Route::get('/{category}/{subcategory?}', [
         'as' => 'categories.show',
         'uses' => 'CategoriesController@show'
     ]);

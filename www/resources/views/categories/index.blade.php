@@ -10,7 +10,7 @@
             <div class="row">
                 @foreach ($categories as $category)
                     <div class="category">
-                        <b><a href="{{ route('categories.show', ['category' => $parent, 'slug' => $category->slug]) }}">{{ $category->name }}</a></b>
+                        <b><a href="{{ route('categories.show', ['category' => $parent, 'subcategory' => $category->slug]) }}">{{ $category->name }}</a></b>
                     </div>
                 @endforeach
             </div><!-- /.row -->

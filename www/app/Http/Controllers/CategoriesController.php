@@ -9,11 +9,11 @@ use App\Http\Requests;
 
 class CategoriesController extends Controller
 {
-    public function show($category, $slug = null)
+    public function show($category, $subcategory = null)
     {
-        if($slug != null) {
+        if($subcategory != null) {
             try {
-                $cat = PrsoCategory::where('slug', '=', $slug)->having('depth', '=', 1)->first();
+                $cat = PrsoCategory::withDepth()->where('slug', '=', $subcategory)->having('depth', '=', 1)->first();
 
                 if(!$cat) {
                     throw new \Exception();
