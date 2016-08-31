@@ -13,7 +13,7 @@ class CategoriesController extends Controller
     {
         if($slug != null) {
             try {
-                $cat = PrsoCategory::where('slug', '=', $slug)->first();
+                $cat = PrsoCategory::where('slug', '=', $slug)->having('depth', '=', 1)->first();
 
                 if(!$cat) {
                     throw new \Exception();
