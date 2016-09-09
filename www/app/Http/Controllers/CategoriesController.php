@@ -9,9 +9,17 @@ use App\Http\Requests;
 
 class CategoriesController extends Controller
 {
+
+
+    /**
+     * @param $category
+     * @param null $subcategory
+     * @return $this|\Illuminate\Http\Response
+     */
     public function show($category, $subcategory = null)
     {
         if($subcategory != null) {
+
             try {
                 $cat = PrsoCategory::withDepth()->where('slug', '=', $subcategory)->having('depth', '=', 1)->first();
 
@@ -25,15 +33,15 @@ class CategoriesController extends Controller
             } catch (\Exception $e) {
                 return response()->view('errors.'.'503');
             }
+
         } else {
+
             try {
                 $cat = PrsoCategory::withDepth()->having('depth', '=', 0)->where('slug', '=', $category)->first();
 
                 if(!$cat) {
                     throw new \Exception();
                 }
-
-
 
                 return view('categories.index')->with([
                     'categories' => $cat->children,
@@ -42,6 +50,7 @@ class CategoriesController extends Controller
             } catch (\Exception $e) {
                 return response()->view('errors.'.'503');
             }
+
         }
     }
 }

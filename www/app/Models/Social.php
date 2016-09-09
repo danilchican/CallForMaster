@@ -29,7 +29,7 @@ class Social extends Model
      */
 
     protected $fillable = [
-        'vk_name', 'ok_name', 'fb_name', 'vk_url', 'ok_url', 'fb_url'
+        'vk_url', 'ok_url', 'fb_url'
     ];
 
     /**

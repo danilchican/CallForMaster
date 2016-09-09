@@ -23,7 +23,14 @@ class CompaniesController extends Controller
             $company = Company::findOrFail($id);
             $reviews = $company->reviews()->get();
 
-            return view('companies.cart')->with(compact(['company', 'reviews']));
+            $phones = $company->contacts->phones()->filled()->get();
+            $groups = $company->contacts->groups;
+
+            $logo_url = (empty($company->logo_url) && File::exists("uploads/images/".$company->logo_url))
+                ? "backend/themes/default/images/no_logo.svg"
+                : "uploads/images/".$company->logo_url;
+
+            return view('companies.cart')->with(compact(['company', 'reviews', 'phones', 'groups', 'logo_url']));
         } catch (\Exception $e) {
             return response()->view('errors.'.'503');
         }
