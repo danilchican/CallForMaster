@@ -216,6 +216,11 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'account'], function 
         'as' => 'account.specializations.index',
         'uses' => 'SpecializationsController@indexAccount'
     ]);
+
+    Route::get('/rise', [
+        'as' => 'rise.index',
+        'uses' => 'Account\RiseController@index'
+    ]);
 });
 
 Route::group(['middleware' => ['web']], function () {
