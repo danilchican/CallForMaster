@@ -4,6 +4,14 @@
     <title>ZvoniMasteru.by</title>
 @endsection
 
+@section('css')
+    <style>
+        .thumbnail .caption {
+            overflow: hidden;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container companies">
             <div class="row">
@@ -22,9 +30,7 @@
                     @if(count($companies) > 0)
                         <div class="row">
                             @foreach($companies as $company)
-                                <div class="col-md-12 col-sm-12 col-xs-12 company-box">
-                                    <h4><a href="{{ route('companies.cart', $company->id) }}">{{ $company->name ? $company->name : 'Без имени' }}</a></h4>
-                                </div><!-- /.col-lg-4 -->
+                                @include('categories.companies.show', ['company' => $company])
                             @endforeach
                         </div><!-- /.row -->
 

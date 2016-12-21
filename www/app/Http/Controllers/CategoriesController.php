@@ -10,10 +10,8 @@ use App\Http\Requests;
 class CategoriesController extends Controller
 {
 
-
     /**
      * @param $category
-     * @param null $subcategory
      * @return $this|\Illuminate\Http\Response
      */
     public function show($category)
