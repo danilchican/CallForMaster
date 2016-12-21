@@ -234,5 +234,5 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'categories.show',
         'uses' => 'CategoriesController@show'
     ]);
-    
+
 });

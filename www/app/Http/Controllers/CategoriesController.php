@@ -11,10 +11,11 @@ class CategoriesController extends Controller
 {
 
     /**
+     * @param Request $request
      * @param $category
      * @return $this|\Illuminate\Http\Response
      */
-    public function show($category)
+    public function show(Request $request, $category)
     {
             try {
                 $cat = PrsoCategory::withDepth()->where('slug', '=', $category)->first();
@@ -23,10 +24,21 @@ class CategoriesController extends Controller
                     throw new \Exception();
                 }
 
+                $categories = $cat->children;
+
+                if($categories->isEmpty()) {
+                    $depth = $cat->depth - 1;
+
+                    $category = $cat->ancestors()->withDepth()->having('depth', '=', $depth)->first();
+
+                    $categories = PrsoCategory::descendantsOf($category->id);
+                }
+
                 return view('categories.category')->with([
-                    'categories' => $cat->children,
+                    'categories' => $categories,
                     'companies' => $cat->companies()->published()->paginate(5),
                 ]);
+
             } catch (\Exception $e) {
                 return response()->view('errors.'.'503');
             }
