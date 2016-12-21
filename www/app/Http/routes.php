@@ -119,6 +119,8 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'reviews.create',
         'uses' => 'ReviewsController@create'
     ]);
+
+
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'account'], function () {
@@ -225,9 +227,12 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'account'], function 
     ]);
 });
 
+
 Route::group(['middleware' => ['web']], function () {
+
     Route::get('/{category}', [
         'as' => 'categories.show',
         'uses' => 'CategoriesController@show'
     ]);
+    
 });
