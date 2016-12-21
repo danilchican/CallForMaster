@@ -45,6 +45,8 @@ Route::group(['middleware' => ['admin_group'], 'prefix' => 'admin'], function ()
         'uses' => 'PrsoCategoryController@index'
     ]);
 
+    Route::resource('tariffs', 'Admin\TariffsController');
+
     Route::get('/specializations', [
         'as' => 'admin.specialization.index',
         'uses' => 'SpecializationsController@index'

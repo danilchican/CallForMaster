@@ -28,7 +28,9 @@ class CategoriesController extends Controller
                 }
 
                 return view('categories.category')->with([
-                    'companies' => $cat->companies()->published()->paginate(5)
+                    'categories' => $cat->children,
+                    'parent' => '',
+                    'companies' => $cat->companies()->published()->paginate(5),
                 ]);
             } catch (\Exception $e) {
                 return response()->view('errors.'.'503');
@@ -43,9 +45,10 @@ class CategoriesController extends Controller
                     throw new \Exception();
                 }
 
-                return view('categories.index')->with([
+                return view('categories.category')->with([
                     'categories' => $cat->children,
-                    'parent' => $cat->slug
+                    'parent' => $cat->slug,
+                    'companies' => $cat->companies()->published()->paginate(5),
                 ]);
             } catch (\Exception $e) {
                 return response()->view('errors.'.'503');
