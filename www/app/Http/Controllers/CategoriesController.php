@@ -30,7 +30,7 @@ class CategoriesController extends Controller
 
                     $category = $cat->ancestors()->withDepth()->having('depth', '=', $depth)->first();
 
-                    $categories = PrsoCategory::descendantsOf($category->id);
+                    $categories = $category->children;
                 }
 
                 return view('categories.category')->with([
