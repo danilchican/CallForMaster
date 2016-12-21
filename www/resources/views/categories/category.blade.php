@@ -16,20 +16,11 @@
     <div class="container companies">
             <div class="row">
                 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                    @if(count($categories) > 0)
-                        @foreach ($categories as $category)
-                            <div class="list-group" style="margin-bottom: 0;">
-                                <a href="{{ route('categories.show', ['category' => $category->slug]) }}" class="list-group-item">{{ $category->name }}</a>
-                            </div>
-                        @endforeach
-                    @else
-                        
-                        @foreach ($categories as $category)
-                            <div class="list-group" style="margin-bottom: 0;">
-                                <a href="{{ route('categories.show', ['category' => $category->slug]) }}" class="list-group-item">{{ $category->name }}</a>
-                            </div>
-                        @endforeach
-                    @endif
+                    @foreach ($categories as $category)
+                        <div class="list-group" style="margin-bottom: 0;">
+                            <a href="{{ route('categories.show', ['category' => $category->slug]) }}" class="list-group-item">{{ $category->name }}</a>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="col-sm-9">
                     @if(count($companies) > 0)
