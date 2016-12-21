@@ -60,6 +60,11 @@
                            data-toggle="tooltip" data-original-title="Today">new</small>
                 </a>
             </li>
+
+            <li>
+                <a href="{{ route('admin.tariffs.index') }}"><i class="fa fa-list-ul"></i> <span>Tariffs</span></a>
+            </li>
+
             <li>
                 <a href="/adminpanel/news"><i class="fa fa-file-text-o"></i> <span>News</span></a>
             </li>
