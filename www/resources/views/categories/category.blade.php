@@ -6,16 +6,18 @@
 
 @section('content')
     <div class="container companies">
-
-        @if(count($categories) > 0)
             <div class="row">
-                <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                    @foreach ($categories as $category)
-                        <div class="list-group" style="margin-bottom: 0;">
-                            <a href="{{ route('categories.show', ['category' => $category->slug]) }}" class="list-group-item">{{ $category->name }}</a>
-                        </div>
-                    @endforeach
-                </div>
+                @if(count($categories) > 0)
+                    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                        @foreach ($categories as $category)
+                            <div class="list-group" style="margin-bottom: 0;">
+                                <a href="{{ route('categories.show', ['category' => $category->slug]) }}" class="list-group-item">{{ $category->name }}</a>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    Подкатегорий нет.
+                @endif
                 <div class="col-sm-9">
                     @if(count($companies) > 0)
                         <div class="row">
@@ -36,6 +38,5 @@
                     @endif
                 </div>
             </div>
-        @endif
     </div><!-- /.container -->
 @endsection
