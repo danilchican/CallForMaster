@@ -16,12 +16,10 @@ class CategoriesController extends Controller
      * @param null $subcategory
      * @return $this|\Illuminate\Http\Response
      */
-    public function show($category, $subcategory = null)
+    public function show($category)
     {
-        if($subcategory != null) {
-
             try {
-                $cat = PrsoCategory::withDepth()->where('slug', '=', $subcategory)->having('depth', '=', 1)->first();
+                $cat = PrsoCategory::withDepth()->where('slug', '=', $category)->first();
 
                 if(!$cat) {
                     throw new \Exception();
@@ -29,31 +27,10 @@ class CategoriesController extends Controller
 
                 return view('categories.category')->with([
                     'categories' => $cat->children,
-                    'parent' => '',
                     'companies' => $cat->companies()->published()->paginate(5),
                 ]);
             } catch (\Exception $e) {
                 return response()->view('errors.'.'503');
             }
-
-        } else {
-
-            try {
-                $cat = PrsoCategory::withDepth()->having('depth', '=', 0)->where('slug', '=', $category)->first();
-
-                if(!$cat) {
-                    throw new \Exception();
-                }
-
-                return view('categories.category')->with([
-                    'categories' => $cat->children,
-                    'parent' => $cat->slug,
-                    'companies' => $cat->companies()->published()->paginate(5),
-                ]);
-            } catch (\Exception $e) {
-                return response()->view('errors.'.'503');
-            }
-
-        }
     }
 }

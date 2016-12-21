@@ -12,7 +12,7 @@
                 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                     @foreach ($categories as $category)
                         <div class="list-group" style="margin-bottom: 0;">
-                            <a href="{{ route('categories.show', ['category' => $parent, 'subcategory' => $category->slug]) }}" class="list-group-item">{{ $category->name }}</a>
+                            <a href="{{ route('categories.show', ['category' => $category->slug]) }}" class="list-group-item">{{ $category->name }}</a>
                         </div>
                     @endforeach
                 </div>
