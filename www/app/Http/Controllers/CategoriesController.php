@@ -11,11 +11,10 @@ class CategoriesController extends Controller
 {
 
     /**
-     * @param Request $request
      * @param $category
      * @return $this|\Illuminate\Http\Response
      */
-    public function show(Request $request, $category)
+    public function show($category)
     {
             try {
                 $cat = PrsoCategory::withDepth()->where('slug', '=', $category)->first();
