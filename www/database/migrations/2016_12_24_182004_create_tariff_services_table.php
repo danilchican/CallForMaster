@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTariffsTable extends Migration
+class CreateTariffServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,9 @@ class CreateTariffsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tariffs', function (Blueprint $table) {
+        Schema::create('tariff_services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('whom');
-            $table->string('additional_service')->nullable();
-            $table->integer('top')->nullable();
-            $table->boolean('published')->default(0);
-            $table->timestamps();
         });
     }
 
@@ -30,6 +25,6 @@ class CreateTariffsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tariffs');
+        Schema::drop('tariff_services');
     }
 }
