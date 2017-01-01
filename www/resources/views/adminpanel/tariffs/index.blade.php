@@ -47,7 +47,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Title</th>
-                                <th>Cost</th>
+                                <th>Top</th>
                                 <th>Created at</th>
                                 <th>Published</th>
                                 <th>Action</th>
@@ -58,15 +58,15 @@
                                 <tr>
                                     <td>{{ $tariff->id }}.</td>
                                     <td><a href="/adminpanel/tariffs/view/{{ $tariff->id }}" data-toggle="tooltip" data-original-title="View Tariff">{{ $tariff->title }}</a></td>
-                                    <td>{{ $tariff->cost }}$</td>
+                                    <td>TOP {{ $tariff->top }}</td>
+                                    <td>{{ $tariff->created_at->format('m.d.Y H:i') }}</td>
                                     <td>
                                         @if($tariff->published)
-                                            <span class="label label-success">Approved</span>
+                                            <span class="label label-success">Published</span>
                                         @else
-                                            <span class="label label-danger">Delivered</span>
+                                            <span class="label label-danger">Not published</span>
                                         @endif
-                                    </td> <!-- Published status -->
-                                    <td>{{ $tariff->created_at->diffForHumans() }}</td> <!-- Registration date -->
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="/adminpanel/tariffs/edit/{{ $tariff->id }}"><button type="button" class="btn btn-info btn-xs">Edit</button></a>
@@ -77,7 +77,6 @@
                             @endforeach
                             </tbody>
                         </table>
-
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
