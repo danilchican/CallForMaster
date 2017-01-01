@@ -84,8 +84,12 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="{{ route('admin.tariffs.edit', $tariff->id) }}"><button type="button" class="btn btn-info btn-xs">Edit</button></a>
-                                                <a href="{{ route('admin.tariffs.destroy', $tariff->id) }}"><button type="button" class="btn btn-danger btn-xs">Delete</button></a>
+                                                <a href="{{ route('admin.tariffs.edit', $tariff->id) }}">
+                                                    <button type="button" class="btn btn-info btn-xs">Edit</button>
+                                                </a>
+                                                {!! Form::open(['route' => ['admin.tariffs.destroy', $tariff->id], 'method' => 'delete', null, 'style' => 'display: inline;']) !!}
+                                                    <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                                                {!! Form::close() !!}
                                             </div>
                                         </td>
                                     </tr>

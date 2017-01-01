@@ -43,7 +43,13 @@ class TariffsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = ['title', 'whom', 'additional_service', 'top', 'published'];
+
+        $tariff = new Tariff($request->only($attributes));
+        $tariff->save();
+
+        return redirect()->back()
+            ->with(['message' => 'Tariff successfully added']);
     }
 
     /**
@@ -88,6 +94,15 @@ class TariffsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tariff = Tariff::find($id);
+
+        if(is_null($tariff))
+            return redirect()->back()
+                ->with(['message' => 'Tariff has not been found.']);
+
+        $tariff->delete();
+
+        return redirect()->back()
+            ->with(['message' => 'Tariff successfully deleted.']);
     }
 }
