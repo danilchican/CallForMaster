@@ -18,8 +18,7 @@ class Tariff extends Model
      */
 
     protected $fillable = [
-        'title', 'cost', 'description',
-        'published'
+        'title', 'whom', 'additional_service', 'top', 'published',
     ];
 
     /**
