@@ -11,7 +11,7 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Companies</h1>
+        <h1>Tariffs</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Tariffs</li>
@@ -28,26 +28,68 @@
             any tariff by clicking on buttons.</p>" !!}
         </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box no-margin">
-                    <div class="box-header">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="box box-default create-specialization">
+                    <div class="box-header with-border">
+                        <i class="fa fa-edit"></i>
                         <h3 class="box-title">{{ $title }}</h3>
-                        <div class="box-tools">
-                            <div class="input-group" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        {!! Form::open(['route' => 'admin.tariffs.store']) !!}
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-6" style="padding-left:0;">
+                                    <div class="form-group">
+                                        <label for="name">Название тарифа</label>
+                                        <input type="text" class="form-control" name="title" placeholder="Введите название тарифа">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" style="padding-right:0;">
+                                    <div class="form-group">
+                                        <label for="slug">Топ</label>
+                                        <input type="number" value="0" min="0" class="form-control" name="top">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div><!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding no-margin">
 
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-6" style="padding-left:0;">
+                                    <div class="form-group">
+                                        <label for="desc">Для кого</label>
+                                        <input type="text" class="form-control" name="whom" placeholder="Для малого бизнеса">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" style="padding-right:0;">
+                                    <div class="form-group">
+                                        <label for="desc">Доп. услуга</label>
+                                        <input type="text" class="form-control" name="additional_service" placeholder="Наполнение карточки">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="published"> Published
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success save-button">Save</button>
+                        {!! Form::close() !!}
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
