@@ -16,7 +16,7 @@ class CreateTariffsPricesTable extends Migration
             $table->increments('id');
 
             $table->integer('tariff_id')->unsigned();
-            $table->decimal('price', 8, 6);
+            $table->decimal('price', 10, 2);
             $table->string('range');
 
             $table->foreign('tariff_id')->references('id')->on('tariffs')->onDelete('cascade');
