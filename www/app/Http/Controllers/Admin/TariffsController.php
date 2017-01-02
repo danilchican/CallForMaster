@@ -119,7 +119,7 @@ class TariffsController extends Controller
         $tariff = new Tariff($request->only($attributes));
         $tariff->save();
 
-        $tariff->services()->saveMany($services_objects);
+        $tariff->services()->sync($services);
         $tariff->prices()->saveMany($prices_objects);
 
         return redirect()->route('admin.tariffs.index')
