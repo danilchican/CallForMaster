@@ -68,7 +68,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.tariffs.index') }}"><i class="fa fa-circle-o"></i> List</a></li>
-                    <li><a href="{{ route('admin.tariffs.additional') }}"><i class="fa fa-circle-o"></i> Prices & Services</a></li>
+                    <li><a href="{{ route('admin.tariffs.additional') }}"><i class="fa fa-circle-o"></i> Services</a></li>
                 </ul>
             </li>
             <li>
