@@ -50,6 +50,16 @@ Route::group(['middleware' => ['admin_group'], 'prefix' => 'admin'], function ()
         'uses' => 'Admin\TariffsController@indexAdditional'
     ]);
 
+    Route::post('/tariffs/services/create', [
+        'as' => 'admin.tariffs.additional.create',
+        'uses' => 'Admin\TariffsController@createService'
+    ]);
+
+    Route::post('/tariffs/services/destroy', [
+        'as' => 'admin.tariffs.additional.destroy',
+        'uses' => 'Admin\TariffsController@destroyService'
+    ]);
+
     Route::resource('tariffs', 'Admin\TariffsController');
 
     Route::get('/specializations', [
