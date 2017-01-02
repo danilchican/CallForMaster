@@ -60,11 +60,17 @@
                            data-toggle="tooltip" data-original-title="Today">new</small>
                 </a>
             </li>
-
-            <li>
-                <a href="{{ route('admin.tariffs.index') }}"><i class="fa fa-list-ul"></i> <span>Tariffs</span></a>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-list-ul"></i>
+                    <span>Tariffs</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.tariffs.index') }}"><i class="fa fa-circle-o"></i> List</a></li>
+                    <li><a href="{{ route('admin.tariffs.additional') }}"><i class="fa fa-circle-o"></i> Prices & Services</a></li>
+                </ul>
             </li>
-
             <li>
                 <a href="/adminpanel/news"><i class="fa fa-file-text-o"></i> <span>News</span></a>
             </li>

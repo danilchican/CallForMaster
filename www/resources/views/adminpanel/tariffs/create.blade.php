@@ -4,6 +4,15 @@
         <!-- DataTables -->
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/dataTables.bootstrap.css">
 <link rel="stylesheet" href="/backend/themes/adminpanel/css/jquery.dataTables.css">
+<link rel="stylesheet" href="/backend/themes/adminpanel/css/pace.min.css">
+<link rel="stylesheet" href="/backend/themes/adminpanel/css/select2.min.css">
+<style>
+    .select2-container--default
+    .select2-selection--multiple
+    .select2-selection__choice {
+        color: #000;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -27,7 +36,6 @@
             {!! $about or "<p>This page has been created for control of all tariffs. You can create, delete and edit
             any tariff by clicking on buttons.</p>" !!}
         </div>
-
         <div class="col-xs-12">
             <div class="row">
                 {!! Form::open(['route' => 'admin.tariffs.store']) !!}
@@ -54,7 +62,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-xs-12">
                             <div class="row">
                                 <div class="col-xs-6" style="padding-left:0;">
@@ -71,10 +78,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.box-body -->
+                    </div><!-- /.box-body -->
                 </div>
-
 
                 <div class="col-xs-6">
                     <div class="box box-success">
@@ -88,14 +93,14 @@
                                         <div class="col-xs-6" style="padding-left:0;">
                                             <label for="desc">Price <i class="fa fa-fw fa-remove remove-price-btn"></i></label>
                                             <div class="input-group">
-                                                <input type="number" class="form-control" value="0" name="prices[price][]">
+                                                <input type="number" class="form-control" step="any" value="0" name="prices[]">
                                                 <span class="input-group-addon">руб.</span>
                                             </div>
                                         </div>
                                         <div class="col-xs-6" style="padding-right:0;">
                                             <div class="form-group">
                                                 <label for="desc">Time</label>
-                                                <input type="text" class="form-control" name="prices[range][]" placeholder="1 месяц">
+                                                <input type="text" class="form-control" name="ranges[]" placeholder="1 месяц">
                                             </div>
                                         </div>
                                     </div>
@@ -112,41 +117,29 @@
                         <!-- /.box-body -->
                     </div>
                 </div>
-
                 <div class="col-xs-6">
                     <div class="box box-success">
                         <div class="box-header with-border">
                             <h3 class="box-title">Services</h3>
                         </div>
                         <div class="box-body">
-                            <div id="services">
-                                <div class="col-xs-12 service-item">
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="desc">Title <i class="fa fa-fw fa-remove remove-service-btn"></i></label>
-                                            <input type="text" class="form-control" name="services[][title]" placeholder="Размещение в 1-ой категории 3-го уровня...">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="row">
-                                    <button type="button" id="add-new-service-btn" style="text-align: left;" class="btn btn-block btn-success">
-                                        <i class="fa fa-fw fa-plus"></i> Add more
-                                    </button>
-                                </div>
+                            <div class="form-group">
+                                <select name="services[]" multiple="multiple" class="form-control select2 select2-hidden-accessible services-select" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                    @foreach($services as $service)
+                                        <option value="{{ $service->id }}">{{ $service->title }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <!-- /.box-body -->
                     </div>
                 </div>
-
                 <div class="col-xs-12">
                     <div class="row">
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="published"> Published
+                                    {{ Form::checkbox('published', 1, true) }} Published
                                 </label>
                             </div>
                         </div>
@@ -164,53 +157,40 @@
 @endsection
 
 @section('javascripts')
+    <script src="/backend/themes/adminpanel/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
-            var add_service_btn = $('#add-new-service-btn'),
-                add_price_btn   = $('#add-new-price-btn');
+            $(".services-select").select2({
+                placeholder: "Выберите услуги...",
+                allowClear: true
+            });
 
-            var services_block = $('#services'),
-                prices_block   = $('#prices');
-
-            var new_service_block = '',
-                new_price_block   = '';
-
-            new_service_block = '<div class=\"col-xs-12 service-item\">'
-                    + '<div class=\"row\"> <div class=\"form-group\">'
-                    + '<label for=\"desc\">Title <i class=\"fa fa-fw fa-remove remove-service-btn\"></i></label>'
-                    + '<input type=\"text\" class=\"form-control\" name=\"services[][title]\" '
-                    + 'placeholder=\"Размещение в 1-ой категории 3-го уровня...\">'
-                    + '</div></div></div>';
+            var add_price_btn = $('#add-new-price-btn');
+            var prices_block = $('#prices');
+            var new_price_block   = '';
 
             new_price_block = '<div class=\"col-xs-12 price-item\">'
                     + '<div class=\"row\">'
                     + '<div class=\"col-xs-6\" style=\"padding-left:0;\">'
                     + '<label for=\"desc\">Price <i class=\"fa fa-fw fa-remove remove-price-btn\"></i></label>'
                     + '<div class=\"input-group\">'
-                    + '<input type=\"number\" class=\"form-control\" value=\"0\" name=\"prices[price][]\">'
+                    + '<input type=\"number\" class=\"form-control\" step=\"any\" value=\"0\" name=\"prices[]\">'
                     + '<span class=\"input-group-addon\">руб.</span>'
                     + '</div></div>'
                     + '<div class=\"col-xs-6\" style=\"padding-right:0;\">'
                     + '<div class=\"form-group\">'
                     + '<label for=\"desc\">Time</label>'
-                    + '<input type=\"text\" class=\"form-control\" name=\"prices[range][]\" placeholder=\"1 месяц\">'
+                    + '<input type=\"text\" class=\"form-control\" name=\"ranges[]\" placeholder=\"1 месяц\">'
                     + '</div></div></div></div>';
-
-            add_service_btn.on('click', function () {
-                services_block.append(new_service_block);
-            });
 
             add_price_btn.on('click', function () {
                 prices_block.append(new_price_block);
             });
 
-            $('.content').on("click", ".remove-service-btn",  function () {
-                this.closest('.service-item').remove();
-            });
-
             $('.content').on("click", ".remove-price-btn",  function () {
                 this.closest('.price-item').remove();
             });
+
         });
     </script>
 @endsection

@@ -22,7 +22,6 @@
                     <option value="{{ $parent->id }}">{{ $parent->name }}</option>
                 @endforeach
             </select>
-
         </div>
         <div class="form-group">
             <label for="desc">Описание категории</label>
