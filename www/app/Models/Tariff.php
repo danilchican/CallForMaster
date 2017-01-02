@@ -31,4 +31,24 @@ class Tariff extends Model
     {
         return $query->where('published', '=', true);
     }
+
+    /**
+     * Set the relation between services and tariff.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'service_to_tariff', 'tariff_id', 'service_id');
+    }
+
+    /**
+     * Get the prices of the current tariff.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function prices()
+    {
+        return $this->hasMany(Price::class);
+    }
 }

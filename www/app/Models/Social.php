@@ -37,7 +37,6 @@ class Social extends Model
      *
      * @return array
      */
-
     public function contacts()
     {
         return $this->belongsTo(Contact::class);
