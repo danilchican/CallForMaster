@@ -12,14 +12,14 @@ class CreateTariffsPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tariffs_prices', function (Blueprint $table) {
+        Schema::create('tariff_prices', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('tariff_id')->unsigned();
             $table->decimal('price', 8, 6);
             $table->string('range');
 
-            $table->foreign('tariff_id')->references('id')->on('tariffs');
+            $table->foreign('tariff_id')->references('id')->on('tariffs')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateTariffsPricesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tariffs_prices');
+        Schema::drop('tariff_prices');
     }
 }

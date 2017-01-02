@@ -18,8 +18,8 @@ class CreateServiceToTariffTable extends Migration
             $table->integer('tariff_id')->unsigned();
             $table->integer('service_id')->unsigned();
 
-            $table->foreign('tariff_id')->references('id')->on('tariffs');
-            $table->foreign('service_id')->references('id')->on('tariff_services');
+            $table->foreign('tariff_id')->references('id')->on('tariffs')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('tariff_services')->onDelete('cascade');
         });
     }
 
