@@ -11,10 +11,11 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Prices & Services</h1>
+        <h1>Services</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Prices & Services</li>
+            <li>Tariffs</li>
+            <li class="active">Services</li>
         </ol>
     </section>
 
@@ -25,18 +26,6 @@
             <h4>About this page!</h4>
             {!! $about or "<p>This page has been created for control of all Prices & Services. You can create, delete and edit
             any Price or Service by clicking on buttons.</p>" !!}
-        </div>
-
-        <div class="col-xs-12" style="margin-bottom: 15px;">
-            <div class="row">
-                <div class="col-xs-2">
-                    <div class="row">
-                        <a href="{{ route('admin.tariffs.create') }}">
-                            <button type="button" class="btn btn-block btn-primary">New Service</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row">
@@ -65,7 +54,8 @@
                                             <a href="">
                                                 <button type="button" class="btn btn-info btn-xs">Edit</button>
                                             </a>
-                                            {!! Form::open(['url' => '/', 'method' => 'delete', null, 'style' => 'display: inline;']) !!}
+                                            {!! Form::open(['route' => 'admin.tariffs.additional.destroy', 'method' => 'post', null, 'style' => 'display: inline;']) !!}
+                                                <input type="hidden" name="service_id" value="{{ $service->id }}">
                                                 <button type="submit" class="btn btn-danger btn-xs">Delete</button>
                                             {!! Form::close() !!}
                                         </div>
@@ -80,6 +70,9 @@
                         </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
+            <div class="col-xs-6">
+                @include('adminpanel.tariffs.additionals.create')
+            </div>
         </div><!-- /.row -->
 
         <div class="row">
