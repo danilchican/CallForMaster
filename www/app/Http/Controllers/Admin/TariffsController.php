@@ -39,6 +39,35 @@ class TariffsController extends Controller
     }
 
     /**
+     * Create service.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createService(Request $request)
+    {
+        $service = new Service($request->all());
+        $service->save();
+
+        return redirect()->back()
+            ->with(['message' => 'Service successfully created.']);
+    }
+
+    public function destroyService(Request $request)
+    {
+        $service = Service::find($request->input('service_id'));
+
+        if(is_null($service))
+            return redirect()->back()
+                ->with(['message' => 'Service has not been found.']);
+
+        $service->delete();
+
+        return redirect()->back()
+            ->with(['message' => 'Service successfully deleted.']);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
