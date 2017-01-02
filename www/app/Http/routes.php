@@ -45,6 +45,11 @@ Route::group(['middleware' => ['admin_group'], 'prefix' => 'admin'], function ()
         'uses' => 'PrsoCategoryController@index'
     ]);
 
+    Route::get('/tariffs/services', [
+        'as' => 'admin.tariffs.additional',
+        'uses' => 'Admin\TariffsController@indexAdditional'
+    ]);
+
     Route::resource('tariffs', 'Admin\TariffsController');
 
     Route::get('/specializations', [
@@ -119,7 +124,6 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'reviews.create',
         'uses' => 'ReviewsController@create'
     ]);
-
 
 });
 
