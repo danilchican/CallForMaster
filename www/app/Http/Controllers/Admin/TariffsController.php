@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Tariff;
+use App\Models\Service;
+use App\Models\Price;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -24,6 +26,19 @@ class TariffsController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAdditional()
+    {
+        return view('adminpanel.tariffs.additionals.index')->with([
+            'services' => Service::paginate(4),
+            'title_service' => 'All Services',
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -31,7 +46,9 @@ class TariffsController extends Controller
     public function create()
     {
         return view('adminpanel.tariffs.create')->with([
-            'title' => 'Create New Tariff',
+            'title' => 'Create Tariff',
+            'about' => '<p>At this page you can create new tariff.</p>',
+            'services' => Service::all(),
         ]);
     }
 
@@ -45,10 +62,38 @@ class TariffsController extends Controller
     {
         $attributes = ['title', 'whom', 'additional_service', 'top', 'published'];
 
+        $prices = $request->input('prices');
+        $ranges = $request->input('ranges');
+
+        $services = $request->input('services');
+
+        $services_objects = [];
+        $prices_objects = [];
+
+        if($services) {
+            foreach($services as $service) {
+                $service_obj = new Service();
+                $service_obj->setTitle($service);
+                $services_objects[] = $service_obj;
+            }
+        }
+
+        if(count($prices) == count($ranges)) {
+            for($i = 0; $i < count($prices); $i++) {
+                $price = new Price();
+                $price->setPrice($prices[$i]);
+                $price->setRange($ranges[$i]);
+                $prices_objects[] = $price;
+            }
+        }
+
         $tariff = new Tariff($request->only($attributes));
         $tariff->save();
 
-        return redirect()->back()
+        //$tariff->services()->saveMany($services_objects);
+        $tariff->prices()->saveMany($prices_objects);
+
+        return redirect()->route('admin.tariffs.index')
             ->with(['message' => 'Tariff successfully added']);
     }
 
